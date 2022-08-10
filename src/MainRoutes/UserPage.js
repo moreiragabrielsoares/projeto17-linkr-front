@@ -2,37 +2,46 @@ import styled from "styled-components";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { ThreeCircles } from "react-loader-spinner";
 
 import UserPosts from "../Components/UserPosts";
 
 export default function UserPage() {
   const { id } = useParams();
   const [user, setUser] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    setIsLoading(true);
     const response = axios.get(`http://localhost:5000/user/${ id }`);
     
     response.then((r) => {
       setUser({ ...r.data });
+      setIsLoading(false);
     }).catch((r) => {
       alert(`Erro ${ r.response.status }!`);
+      setIsLoading(false);
     });
   }, [id]);
 
   return (
-    <Main>
-      <div className="container">
-        <div className="left-side">
-          <div className="top">
-            <img src={ user.userPhoto } alt="" />
-            <h1>{ user.name }'s posts</h1>
+    <Main isLoading={isLoading}>
+      {isLoading ? 
+        <ThreeCircles color={"#FFFFFF"}/> 
+        : 
+        <Container>
+          <div className="left-side">
+            <div className="top">
+              <img src={ user.userPhoto } alt="" />
+              <h1>{ user.name }'s posts</h1>
+            </div>
+            <UserPosts user={ user } />
           </div>
-          <UserPosts user={ user } />
-        </div>
-        <div className="right-side">
-          {/* <Trendings /> */}
-        </div>
-      </div>
+          <div className="right-side">
+            {/* <Trendings /> */}
+          </div>
+        </Container>
+      }
     </Main>
   );
 }
@@ -43,18 +52,24 @@ const Main = styled.main`
   width: 100%;
   height: 100vh;
 
-  .container {
-    width: 90%;
-    padding-top: 132px;
+  display: flex;
+  justify-content: center;
+  align-items: ${({isLoading}) => isLoading ? "center" : "inherit"};
+`;
 
-    display: flex;
-    justify-content: center;
-  }
+const Container = styled.div`
+  width: 90%;
+  padding-top: 132px;
+
+  display: flex;
+  justify-content: center;
 
   .left-side {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+
+    width: 70%;
 
     img {
       border-radius: 50%;
@@ -76,5 +91,23 @@ const Main = styled.main`
         margin-left: 18px;
       }
     }
+  }
+
+  .right-side {
+    width: 30%;
+  }
+
+  @media screen and (max-width: 900px) {
+    .right-side {
+      display: none;
+    }
+
+    .left-side {
+      width: 100%;
+    }
+  }
+
+  @media screen and (max-width: 720px) {
+    width: 100%;
   }
 `;

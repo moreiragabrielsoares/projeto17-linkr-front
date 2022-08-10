@@ -8,12 +8,12 @@ export default function UserPosts({ user }) {
     <Posts>
       {posts.map((post, index) =>
         <div className="post" key={ index }>
-          <div className="left-side">
+          <div className="left">
             <img src={ user.userPhoto } alt="" />
             <AiOutlineHeart size={ "20px" } />
             <h3>X Likes</h3> {/* Colocar número de likes */}
           </div>
-          <div className="right-side">
+          <div className="right">
             <h2>{ user.name }</h2>
             <h2>{ post.content }</h2>
             <a href={ post.postUrl }>{ post.postUrl }</a>
@@ -50,9 +50,9 @@ const Posts = styled.div`
     display: flex;
   }
 
-  .left-side {
+  .left {
     width: 10%;
-    margin-right: 3%;
+    margin-right: 15px;
 
     display: flex;
     flex-direction: column;
@@ -70,7 +70,7 @@ const Posts = styled.div`
     }
   }
 
-  .right-side {
+  .right {
     width: 90%;
     display: flex;
     flex-direction: column;
@@ -86,6 +86,24 @@ const Posts = styled.div`
       font-weight: 400;
 
       margin: 7px 0;
+    }
+  }
+
+  @media screen and (max-width: 720px) {
+    .post {
+      border-radius: 0;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .right {
+      h2:first-child {
+        font-size: 17px;
+      }
+
+      h2:nth-child(2) {
+        font-size: 15px;
+      }
     }
   }
 `;
