@@ -10,20 +10,21 @@ export default function UserPage() {
   const [user, setUser] = useState({});
 
   useEffect(() => {
-    const response = axios.get(`https://projeto17-back.herokuapp.com/user/${id}`);
-
+    const response = axios.get(`http://localhost:5000/user/${ id }`);
+    
     response.then((r) => {
-      setUser({...r.data});
+      setUser({ ...r.data });
     }).catch((r) => {
-      alert(`Erro ${r.response.status}!`);
+      alert(`Erro ${ r.response.status }!`);
     });
   }, [id]);
 
   return (
     <Main>
-      <h1>{user.name}'s posts</h1>
-      <UserPosts posts={user.posts} />
-      <Trendings />
+      <img src={ user.userPhoto } alt="" />
+      <h1>{ user.name }'s posts</h1>
+      <UserPosts user={ user } />
+      {/* <Trendings /> */}
     </Main>
   );
 }
