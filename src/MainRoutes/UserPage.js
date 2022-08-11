@@ -9,7 +9,7 @@ import ListPosts from "../Components/ListPosts";
 
 export default function UserPage() {
   const { id } = useParams();
-  const [user, setUser] = useState({});
+  const [userPosts, setUserPosts] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -18,7 +18,7 @@ export default function UserPage() {
     const response = axios.get(`http://localhost:5000/user/${ id }`);
     
     response.then((r) => {
-      setUser({ ...r.data });
+      setUserPosts([...r.data]);
       setIsLoading(false);
     }).catch((r) => {
       alert(`Erro ${ r.response.status }!`);
@@ -36,10 +36,10 @@ export default function UserPage() {
           <Container>
             <div className="left-side">
               <div className="top">
-                <img src={ user.userPhoto } alt="" />
-                <h1>{ user.name }'s posts</h1>
+                <img src={ userPosts[0].userPhoto } alt="" />
+                <h1>{ userPosts[0].userName }'s posts</h1>
               </div>
-              <ListPosts posts={ user.posts } />
+              <ListPosts posts={ userPosts } />
             </div>
             <div className="right-side">
               {/* <Trendings /> */}
