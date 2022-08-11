@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Main = styled.main`
   width: 100%;
-  height: 100vh;
+  height: 130vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -21,7 +21,7 @@ export const Main = styled.main`
     header {
       display: flex;
       width: 100%;
-      height: 26%;
+      min-height:175px;
       background-color: #151515;
       box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
       color: #ffffff;
@@ -55,7 +55,15 @@ export const Form = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 44px;
+  margin-top: 40px;
+  h4 {
+    margin-bottom: 20px;
+    margin-top: -20px;
+    color: #ffffff;
+  }
+  svg{
+    padding-top:3px;
+  }
 
   input {
     width: 88%;

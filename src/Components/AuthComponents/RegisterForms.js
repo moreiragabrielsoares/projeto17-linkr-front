@@ -1,13 +1,14 @@
-import styled from "styled-components";
 import React from "react";
 import { useRef, useState, useEffect } from "react";
 import { FaInfoCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Form } from "../../styledComponents/authStyledComponents";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const EMAIL_REGEX = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/i;
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PHOTO_REGEX= /(https?:\/\/.*\.(?:png|jpg|jpeg|svg|jfif))/;
 
 export default function RegisterForms() {
   const userRef = useRef();
@@ -21,13 +22,13 @@ export default function RegisterForms() {
   const [validPwd, setValidPwd] = useState(false);
   const [pwdFocus, setPwdFocus] = useState(false);
 
-  const [matchPwd, setMatchPwd] = useState("");
-  const [validMatch, setValidMatch] = useState(false);
-  const [matchFocus, setMatchFocus] = useState(false);
-
   const [email, setEmail] = useState("");
   const [validEmail, setValidEmail] = useState(false);
   const [emailFocus, setEmailFocus] = useState(false);
+
+  const [photo, setPhoto] = useState("");
+  const [validPhoto, setValidPhoto] = useState(false);
+  const [photoFocus, setPhotoFocus] = useState(false);
 
   const [errMsg, setErrMsg] = useState("");
 
@@ -47,26 +48,28 @@ export default function RegisterForms() {
 
   useEffect(() => {
     setValidPwd(PWD_REGEX.test(pwd));
-    setValidMatch(pwd === matchPwd);
-  }, [pwd, matchPwd]);
+  }, [pwd]);
+
+  useEffect(() => {
+    setValidPhoto(PHOTO_REGEX.test(photo));
+  }, [photo]);
 
   useEffect(() => {
     setErrMsg("");
-  }, [user, email, pwd, matchPwd]);
+  }, [user, email, pwd, photo]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const v1 = USER_REGEX.test(user);
     const v2 = PWD_REGEX.test(pwd);
     const v3 = EMAIL_REGEX.test(email);
-
+    const v4 = PHOTO_REGEX.test(photo);
     if (!v1) {
       setErrMsg(
         "Nome inválido, nome deve começar com uma letra e ter entre 3 - 23 caracteres "
       );
       return;
     }
-
     if (!v2) {
       setErrMsg(
         "Senha inválida, senha deve conter letra minúscula, letra maiúscula,caracter especial, número e ter entre 8 - 24"
@@ -76,16 +79,20 @@ export default function RegisterForms() {
     if (!v3) {
       setErrMsg("E-mail inválido, insira um e-mail válido");
     }
+    if (!v4){
+      setErrMsg("Imagem inválida")
+    }
     try {
-    //   const postObj = { name:user, email, password: pwd, confirmPassword: matchPwd};
-    //   const response = await axios.post(
-    //     "https://deepet-back.herokuapp.com/auth/sign-up",
-    //     postObj
-    //   );
+      const postObj = { name:user, email, password: pwd, userPhoto: photo};
+      const response = await axios.post(
+        "https://projeto17-back.herokuapp.com/signup",
+        postObj
+      );
       setUser("");
       setPwd("");
-      setMatchPwd("");
-      navigate("/login");
+      setPhoto("");
+      setEmail("");
+      navigate("/");
     } catch (err) {
       if (!err?.response) {
         setErrMsg("Sem resposta do servidor");
@@ -99,7 +106,7 @@ export default function RegisterForms() {
   };
 
   return (
-    <Forms onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit}>
       <h2
         ref={errRef}
         className={errMsg ? "errmsg" : "offscreen"}
@@ -107,33 +114,6 @@ export default function RegisterForms() {
       >
         {errMsg}
       </h2>
-      <input
-        type="text"
-        id="username"
-        ref={userRef}
-        autoComplete="off"
-        onChange={(e) => setUser(e.target.value)}
-        value={user}
-        required
-        aria-invalid={validName ? "false" : "true"}
-        aria-describedby="uidnote"
-        onFocus={() => setUserFocus(true)}
-        onBlur={() => setUserFocus(false)}
-        placeholder="Nome"
-      />
-      <h4
-        id="uidnote"
-        className={
-          userFocus && user && !validName ? "instructions" : "offscreen"
-        }
-      >
-        <FaInfoCircle />
-        4 a 24 caracteres.
-        <br />
-        Deve começar com uma letra.
-        <br />
-        Letras, números, underline, hífen permitidos.
-      </h4>
       <input
         type="email"
         id="email"
@@ -145,7 +125,7 @@ export default function RegisterForms() {
         aria-describedby="emailnote"
         onFocus={() => setEmailFocus(true)}
         onBlur={() => setEmailFocus(false)}
-        placeholder="E-mail"
+        placeholder="e-mail"
       />
       <h4
         id="emailnote"
@@ -182,73 +162,58 @@ export default function RegisterForms() {
         <br />
       </h4>
       <input
-        type="password"
-        id="confirm_pwd"
-        onChange={(e) => setMatchPwd(e.target.value)}
-        value={matchPwd}
+        type="text"
+        id="username"
+        ref={userRef}
+        autoComplete="off"
+        onChange={(e) => setUser(e.target.value)}
+        value={user}
         required
-        aria-invalid={validMatch ? "false" : "true"}
-        aria-describedby="confirmnote"
-        onFocus={() => setMatchFocus(true)}
-        onBlur={() => setMatchFocus(false)}
-        placeholder="Repita a senha"
+        aria-invalid={validName ? "false" : "true"}
+        aria-describedby="uidnote"
+        onFocus={() => setUserFocus(true)}
+        onBlur={() => setUserFocus(false)}
+        placeholder="username"
+      />
+      <h4
+        id="uidnote"
+        className={
+          userFocus && user && !validName ? "instructions" : "offscreen"
+        }
+      >
+        <FaInfoCircle />
+        4 a 24 caracteres.
+        <br />
+        Deve começar com uma letra.
+        <br />
+        Letras, números, underline, hífen permitidos.
+      </h4>
+      
+      <input
+        type="text"
+        id="photo"
+        onChange={(e) => setPhoto(e.target.value)}
+        value={photo}
+        required
+        aria-invalid={validPhoto ? "false" : "true"}
+        aria-describedby="photonote"
+        onFocus={() => setPhotoFocus(true)}
+        onBlur={() => setPhotoFocus(false)}
+        placeholder="picture url"
       />
       <h4
         id="confirmnote"
-        className={matchFocus && !validMatch ? "instructions" : "offscreen"}
+        className={photoFocus && !validPhoto ? "instructions" : "offscreen"}
       >
         <FaInfoCircle />
-        Ambas senhas devem ser iguais.
+        Imagem inválida.
       </h4>
       <button
         type="submit"
-        disabled={!validName || !validPwd || !validMatch ? true : false}
+        disabled={!validName || !validPwd || !validPhoto || !validEmail ? true : false}
       >
-        {"Cadastrar"}
+        {"Sign Up"}
       </button>
-    </Forms>
+    </Form>
   );
 }
-
-const Forms = styled.form`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 40px;
-  input {
-    width: 88%;
-    height: 64px;
-    background: #ffffff;
-    box-shadow: 0px 0px 1px rgba(12, 26, 75, 0.24),
-      0px 3px 8px -1px rgba(50, 50, 71, 0.05);
-    border-radius: 16px;
-    font-size: 20px;
-    line-height: 23px;
-    color: #000000;
-    padding-left: 15px;
-    margin-bottom: 24px;
-    border: none;
-    ::placeholder {
-      font-size: 20px;
-      line-height: 23px;
-      color: #a8afb9;
-    }
-  }
-  h4 {
-    margin-bottom: 20px;
-    margin-top: -20px;
-  }
-  button {
-    border: none;
-    width: 88%;
-    height: 64px;
-    background-color: #5166b7;
-    border-radius: 16px;
-    font-weight: 700;
-    font-size: 20px;
-    line-height: 23px;
-    color: #ffffff;
-  }
-`;

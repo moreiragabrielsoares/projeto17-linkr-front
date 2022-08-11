@@ -25,36 +25,36 @@ export default function LoginForms() {
   const handleSubmit = async (e) => {
     e.preventDefault();
   
-    // try {
-    //   const response = await axios.post("https://deepet-back.herokuapp.com/auth/sign-in", {
-    //     email,
-    //     password: pwd,
-    //   });
-    //   const token = response?.data?.token;
-    //   const name = response?.data?.name;
-    //   const time = response?.data?.time;
-    //   const objPost = { name, token, time };
-    //   localStorage.setItem("userData", JSON.stringify(objPost));
-    //   setEmail("");
-    //   setPwd("");
-    //   navigate("/");
-    // } catch (err) {
-    //   if (!err?.response) {
-    //     setErrMsg("Sem resposta do servidor");
-    //   }
-    //   if (err.response?.status === 400) {
-    //     setErrMsg("E-mail ou senha incorretos");
-    //   }
-    //   if (err.response?.status === 401) {
-    //     setErrMsg("Não autorizado");
-    //   }
-    //   if (err.response?.status === 404) {
-    //     setErrMsg("Usuário não encontrado");
-    //   } else {
-    //     setErrMsg("Falha no login");
-    //   }
-    //   errRef.current.focus();
-    // }
+    try {
+      const response = await axios.post("https://projeto17-back.herokuapp.com/signin", {
+        email,
+        password: pwd,
+      });
+      const token = response?.data?.token;
+      const name = response?.data?.name;
+      const photo = response?.data?.photo;
+      const objPost = { name, token, photo };
+      localStorage.setItem("userData", JSON.stringify(objPost));
+      setEmail("");
+      setPwd("");
+      navigate("/timeline");
+    } catch (err) {
+      if (!err?.response) {
+        setErrMsg("Sem resposta do servidor");
+      }
+      if (err.response?.status === 400) {
+        setErrMsg("E-mail ou senha incorretos");
+      }
+      if (err.response?.status === 401) {
+        setErrMsg("Não autorizado");
+      }
+      if (err.response?.status === 404) {
+        setErrMsg("Usuário não encontrado");
+      } else {
+        setErrMsg("Falha no login");
+      }
+      errRef.current.focus();
+    }
   };
 
   return (
