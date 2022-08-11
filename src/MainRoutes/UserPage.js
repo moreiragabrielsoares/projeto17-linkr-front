@@ -39,7 +39,7 @@ export default function UserPage() {
                 <img src={ user.userPhoto } alt="" />
                 <h1>{ user.name }'s posts</h1>
               </div>
-              <ListPosts user={ user } />
+              <ListPosts posts={ user.posts } />
             </div>
             <div className="right-side">
               {/* <Trendings /> */}
