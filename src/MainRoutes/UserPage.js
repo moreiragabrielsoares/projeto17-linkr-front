@@ -4,7 +4,8 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { ThreeCircles } from "react-loader-spinner";
 
-import UserPosts from "../Components/UserPosts";
+//import Header from "../Components/Header";
+import ListPosts from "../Components/ListPosts";
 
 export default function UserPage() {
   const { id } = useParams();
@@ -13,6 +14,7 @@ export default function UserPage() {
 
   useEffect(() => {
     setIsLoading(true);
+    //const response = axios.get(`https://projeto17-back.herokuapp.com/user/${ id }`);
     const response = axios.get(`http://localhost:5000/user/${ id }`);
     
     response.then((r) => {
@@ -25,24 +27,27 @@ export default function UserPage() {
   }, [id]);
 
   return (
-    <Main isLoading={isLoading}>
-      {isLoading ? 
-        <ThreeCircles color={"#FFFFFF"}/> 
-        : 
-        <Container>
-          <div className="left-side">
-            <div className="top">
-              <img src={ user.userPhoto } alt="" />
-              <h1>{ user.name }'s posts</h1>
+    <>
+      {/* <Header userImage={user.userPhoto} isLoading={isLoading} /> */}
+      <Main isLoading={isLoading}>
+        {isLoading ? 
+          <ThreeCircles color={"#FFFFFF"}/> 
+          : 
+          <Container>
+            <div className="left-side">
+              <div className="top">
+                <img src={ user.userPhoto } alt="" />
+                <h1>{ user.name }'s posts</h1>
+              </div>
+              <ListPosts user={ user } />
             </div>
-            <UserPosts user={ user } />
-          </div>
-          <div className="right-side">
-            {/* <Trendings /> */}
-          </div>
-        </Container>
-      }
-    </Main>
+            <div className="right-side">
+              {/* <Trendings /> */}
+            </div>
+          </Container>
+        }
+      </Main>
+    </>
   );
 }
 
@@ -71,17 +76,17 @@ const Container = styled.div`
 
     width: 70%;
 
-    img {
-      border-radius: 50%;
-      object-fit: cover;
-
-      width: 50px;
-      height: 50px;
-    }
-
     .top {
       margin-left: 18px;
       display: flex;
+
+      img {
+        border-radius: 50%;
+        object-fit: cover;
+
+        width: 50px;
+        height: 50px;
+      }
 
       h1 {
         color: #FFFFFF;

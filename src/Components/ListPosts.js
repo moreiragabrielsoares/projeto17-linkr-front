@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { AiOutlineHeart } from "react-icons/ai";
 
-export default function UserPosts({ user }) {
+export default function ListPosts({ user }) {
   const { posts } = user;
 
   return (
@@ -68,6 +68,11 @@ const Posts = styled.div`
     align-items: center;
 
     img {
+      border-radius: 50%;
+      object-fit: cover;
+
+      width: 50px;
+      height: 50px;
       margin-bottom: 15px;
     }
 
@@ -151,10 +156,10 @@ const Link = styled.div`
 
   .image-link {
     width: 30%;
-    object-fit: cover;
 
     img {
       border-radius: 0 11px 11px 0;
+      object-fit: cover;
       
       width: 100%;
       height: 100%;
