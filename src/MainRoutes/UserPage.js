@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { ThreeCircles } from "react-loader-spinner";
 
-//import Header from "../Components/Header";
+import Header from "../Components/Header";
 import ListPosts from "../Components/ListPosts";
 
 export default function UserPage() {
@@ -28,8 +28,8 @@ export default function UserPage() {
 
   return (
     <>
-      {/* <Header userImage={user.userPhoto} isLoading={isLoading} /> */}
-      <Main isLoading={isLoading}>
+      <Header userImage={ isLoading ? <></> : userPosts[0].userPhoto } isLoading={ isLoading } />
+      <Main isLoading={ isLoading }>
         {isLoading ? 
           <ThreeCircles color={"#FFFFFF"}/> 
           : 
