@@ -153,7 +153,7 @@ const Center = styled.div`
     border-radius: 0 0 8px 8px;
 
     width: 100%;
-    padding: 14px 15px 23px 15px;
+    padding: 14px 15px 10px 15px;
 
     position: absolute;
     top: 40px;
@@ -171,6 +171,7 @@ const Center = styled.div`
       cursor: pointer;
 
       width: 100%;
+      margin-bottom: 13px;
 
       img {
         border-radius: 50%;
