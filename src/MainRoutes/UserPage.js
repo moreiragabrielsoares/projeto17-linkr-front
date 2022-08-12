@@ -34,11 +34,17 @@ export default function UserPage() {
           : 
           <Container>
             <div className="left-side">
-              {/* <div className="top">
+              <div className="top">
                 <img src={ userPosts[0].userPhoto } alt="" />
                 <h1>{ userPosts[0].userName }'s posts</h1>
               </div>
-               <ListPosts posts={ userPosts } /> */}
+               {userPosts[0].postId ?
+                  <ListPosts posts={ userPosts } />
+                :
+                  <div className="no-posts">
+                    <h2>Ainda não existem posts.</h2>
+                  </div>
+                }
             </div>
             <div className="right-side">
               {/* <Trendings /> */}
@@ -92,6 +98,20 @@ const Container = styled.div`
         font-family: "Oswald";
         font-size: 43px;
         font-weight: 700;
+        margin-left: 18px;
+      }
+    }
+
+    .no-posts {
+      margin-left: 18px;
+
+      h2 {
+        color: #FFFFFF;
+        font-family: "Lato";
+        font-size: 20px;
+        font-weight: 400;
+
+        margin-top: 35px;
         margin-left: 18px;
       }
     }
