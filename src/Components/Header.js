@@ -6,10 +6,11 @@ import { DebounceInput } from "react-debounce-input";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-export default function Header({ userImage, isLoading }) {
+export default function Header({ isLoading }) {
   const [search, setSearch] = useState('');
   const [usersList, setUsersList] = useState([]);
   const [showSearchUsers, setShowSearchUsers] = useState(false);
+  const user = JSON.parse(localStorage.getItem("userData"));
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -67,7 +68,7 @@ export default function Header({ userImage, isLoading }) {
       </Center>
       <div className="right">
         <BsChevronDown color="#FFFFFF"size={"21px"} />
-        <img src={userImage} alt="usuario" />
+        <img src={user.photo} alt="usuario" />
       </div>
     </Head>
   );

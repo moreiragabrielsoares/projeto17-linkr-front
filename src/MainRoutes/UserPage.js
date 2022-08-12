@@ -27,18 +27,18 @@ export default function UserPage() {
 
   return (
     <>
-      <Header userImage={ isLoading ? <></> : userPosts[0].userPhoto } isLoading={ isLoading } />
+      <Header isLoading={ isLoading } />
       <Main isLoading={ isLoading }>
         {isLoading ? 
           <ThreeCircles color={"#FFFFFF"}/> 
           : 
           <Container>
             <div className="left-side">
-              <div className="top">
+              {/* <div className="top">
                 <img src={ userPosts[0].userPhoto } alt="" />
                 <h1>{ userPosts[0].userName }'s posts</h1>
               </div>
-              <ListPosts posts={ userPosts } />
+               <ListPosts posts={ userPosts } /> */}
             </div>
             <div className="right-side">
               {/* <Trendings /> */}
