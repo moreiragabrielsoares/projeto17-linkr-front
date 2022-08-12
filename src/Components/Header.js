@@ -6,10 +6,11 @@ import { DebounceInput } from "react-debounce-input";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-export default function Header({ userImage, isLoading }) {
+export default function Header({ isLoading }) {
   const [search, setSearch] = useState('');
   const [usersList, setUsersList] = useState([]);
   const [showSearchUsers, setShowSearchUsers] = useState(false);
+  const user = JSON.parse(localStorage.getItem("userData"));
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,10 +23,9 @@ export default function Header({ userImage, isLoading }) {
       }).catch((r) => {
         alert(`Erro ${ r.response.status }!`);
       });
-    } else if (search.length === 0) {
-      setShowSearchUsers(false);
-    } else {
+    } else if (search.length < 3) {
       setUsersList([]);
+      setShowSearchUsers(false);
     }
   }, [search]);
 
@@ -55,7 +55,7 @@ export default function Header({ userImage, isLoading }) {
                   navigate(`/user/${user.id}`);
                 }}>
                 <img src={user.userPhoto} alt="" />
-                <h3>{user.name}</h3>
+                <h2>{user.name}</h2>
               </div>
             )
           :
@@ -67,7 +67,7 @@ export default function Header({ userImage, isLoading }) {
       </Center>
       <div className="right">
         <BsChevronDown color="#FFFFFF"size={"21px"} />
-        <img src={userImage} alt="usuario" />
+        <img src={user.photo} alt="usuario" />
       </div>
     </Head>
   );
@@ -145,6 +145,7 @@ const Center = styled.div`
       background-color: #FFFFFF;
       border: none;
       border-radius: 8px;
+      margin-right: 8px;
     }
   }
 
@@ -158,11 +159,15 @@ const Center = styled.div`
     position: absolute;
     top: 40px;
 
-    h3 {
+    h2, h3 {
         color: #515151;
         font-family: "Lato";
         font-size: 19px;
         font-weight: 400;
+      }
+
+      h3 {
+        margin-bottom: 13px;
       }
 
     .user {
