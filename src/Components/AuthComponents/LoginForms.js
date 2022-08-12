@@ -32,8 +32,9 @@ export default function LoginForms() {
       });
       const token = response?.data?.token;
       const name = response?.data?.name;
-      const photo = response?.data?.photo;
-      const objPost = { name, token, photo };
+      const photo = response?.data?.userPhoto;
+      const userId = response?.data?.userId;
+      const objPost = { name, token, photo, userId };
       localStorage.setItem("userData", JSON.stringify(objPost));
       setEmail("");
       setPwd("");
