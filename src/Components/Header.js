@@ -23,10 +23,9 @@ export default function Header({ isLoading }) {
       }).catch((r) => {
         alert(`Erro ${ r.response.status }!`);
       });
-    } else if (search.length === 0) {
-      setShowSearchUsers(false);
-    } else {
+    } else if (search.length < 3) {
       setUsersList([]);
+      setShowSearchUsers(false);
     }
   }, [search]);
 
@@ -56,7 +55,7 @@ export default function Header({ isLoading }) {
                   navigate(`/user/${user.id}`);
                 }}>
                 <img src={user.userPhoto} alt="" />
-                <h3>{user.name}</h3>
+                <h2>{user.name}</h2>
               </div>
             )
           :
@@ -146,6 +145,7 @@ const Center = styled.div`
       background-color: #FFFFFF;
       border: none;
       border-radius: 8px;
+      margin-right: 8px;
     }
   }
 
@@ -159,11 +159,15 @@ const Center = styled.div`
     position: absolute;
     top: 40px;
 
-    h3 {
+    h2, h3 {
         color: #515151;
         font-family: "Lato";
         font-size: 19px;
         font-weight: 400;
+      }
+
+      h3 {
+        margin-bottom: 13px;
       }
 
     .user {
