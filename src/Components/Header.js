@@ -14,7 +14,7 @@ export default function Header({ userImage, isLoading }) {
 
   useEffect(() => {
     if (search.length >= 3) {
-      const response = axios.get(`http://localhost:5000/user?user=${search}`);
+      const response = axios.get(`https://projeto17-back.herokuapp.com/user?user=${search}`);
   
       response.then((r) => {
         setUsersList([...r.data]);
