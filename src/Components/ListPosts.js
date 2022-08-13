@@ -129,6 +129,8 @@ const Posts = styled.div`
     .post {
       border-radius: 0;
     }
+
+    margin-top: 20px;
   }
 
   @media screen and (max-width: 480px) {
