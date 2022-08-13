@@ -11,6 +11,7 @@ export default function UserPage() {
   const { id } = useParams();
   const [userPosts, setUserPosts] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const userPage = true;
 
   useEffect(() => {
     setIsLoading(true);
@@ -39,10 +40,10 @@ export default function UserPage() {
                 <h1>{ userPosts[0].userName }'s posts</h1>
               </div>
                {userPosts[0].postId ?
-                  <ListPosts posts={ userPosts } />
+                  <ListPosts posts={ userPosts } userPage={userPage} />
                 :
                   <div className="no-posts">
-                    <h2>Ainda não existem posts.</h2>
+                    <h2>There are no posts yet.</h2>
                   </div>
                 }
             </div>
