@@ -15,7 +15,7 @@ export default function ListPosts({ posts }) {
           <div className="right">
             <h2>{ post.userName }</h2>
             <h2>{ post.postText }</h2>
-            <Link>
+            <Link onClick={()=> window.open(post.postUrl, "_blank")}>
               <div className="texts">
                 <h2>{ post.urlTitle }</h2>
                 <h3>{ post.urlDescription }</h3>
