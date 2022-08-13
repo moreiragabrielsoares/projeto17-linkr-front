@@ -4,10 +4,9 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
-import { ThreeDots } from  "react-loader-spinner";
 
 
-//import Header from "../Components/Header";
+import Header from "../Components/Header";
 import ListPosts from "../Components/ListPosts";
 
 
@@ -15,31 +14,31 @@ export default function TimelinePage() {
     
     const navigate = useNavigate();
 
-    const userToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTY2MDI1NTAxNSwiZXhwIjoxNjYwMzQxNDE1fQ.ekRkVZupgPQyewxnd0v1vJKYyZcoLvRcCYx79R6wHCE"; //mudar para o token do local storage
+    const userData = JSON.parse(localStorage.getItem("userData"));
 
     const config = {
         headers: {
-            "Authorization": `Bearer ${userToken}`
+            "Authorization": `Bearer ${userData.token}`
         }
     }
     
     const [postsList, setPostsList] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
 
-		const promisse = axios.get("http://localhost:4000/timeline", config); //mudar para o link do back em produção
+		const promisse = axios.get("https://projeto17-back.herokuapp.com/timeline", config);
 
 		promisse.then(success);
 
         function success (res) {
             setPostsList(res.data);
+            setIsLoading(false);
         }
         
         promisse.catch((erro) => {alert(erro.response.data)});
 
 	}, []);
-
-    console.log(postsList);
 
     const [postUrl, setPostUrl] = useState("");
     const [postText, setPostText] = useState("");
@@ -47,19 +46,19 @@ export default function TimelinePage() {
 
     function createPost(event) {
         event.preventDefault();
-    
         setIsFormDisabled(true);
+        setIsLoading(true);
 
         const postObj = {
             postText,
             postUrl
         }
 
-        const request = axios.post("http://localhost:4000/timeline", postObj, config); //mudar para o link do back em produção
+        const request = axios.post("https://projeto17-back.herokuapp.com/timeline", postObj, config);
         
-        request.then(postSuccess);         
-        
-        request.catch((erro) => {alert(erro.response.data); setIsFormDisabled(false)});
+        request.then(postSuccess);
+
+        request.catch((erro) => {alert(erro.response.data); setIsFormDisabled(false); setIsLoading(false)});
     }
 
     function postSuccess(res) {
@@ -67,12 +66,25 @@ export default function TimelinePage() {
         setPostText("");
         setPostUrl("");
         setPostsList(res.data);
+        setIsLoading(false);
+    }
+
+    function checkPosts () {
+        if (isLoading) {
+            return (<h2>Loading...</h2>);
+        }
+
+        if (postsList.length === 0) {
+            return (<h2>There are no posts yet.</h2>);
+        }
+
+        return (<ListPosts posts={ postsList } />)
     }
     
     return (
         <BodyContainer>
 
-            {/* <Header userImage={user.userPhoto} isLoading={isLoading} /> */}
+            <Header />
 
             <ContentContainer>
 
@@ -83,8 +95,7 @@ export default function TimelinePage() {
                 <CreatePostContainer>
 
                     <UserPhoto>
-                        <img src="https://i0.wp.com/www.jbox.com.br/wp/wp-content/uploads/2021/10/narutofeliz-destacada.jpg?fit=774%2C489&quality=99&strip=all&ssl=1"/>
-                         {/*trocar para foto do usuário que estará no local storage*/}
+                        <img src={userData.photo}/>
                     </UserPhoto>
 
                     <FormsContainer>
@@ -112,9 +123,7 @@ export default function TimelinePage() {
                             />
 
                             {isFormDisabled ? 
-                                (<FormsButton type="submit" disabled={isFormDisabled}>
-                                    <ThreeDots color="#FFFFFF" height={50} width={50} />
-                                </FormsButton>) 
+                                (<FormsButton type="submit" disabled={isFormDisabled}>Publishing...</FormsButton>) 
                                 : (<FormsButton type="submit" disabled={isFormDisabled}>Publish</FormsButton>)
                             }
         
@@ -126,7 +135,7 @@ export default function TimelinePage() {
 
                 <PostsContainer>
 
-                    <ListPosts posts={ postsList } />
+                    {checkPosts()}
 
                 </PostsContainer>                
 
@@ -273,4 +282,14 @@ const FormsButton = styled.button`
 
 const PostsContainer = styled.div`
     width: 611px;
+
+    h2 {
+        font-family: 'Oswald';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 20px;
+        color: #FFFFFF;
+
+        margin-top: 30px;
+    }
 `;
