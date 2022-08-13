@@ -32,7 +32,7 @@ export default function Header({ isLoading }) {
   return (
     <>
       <Head>
-        <h1>linkr</h1>
+        <h1 onClick={() => navigate('/timeline')}>linkr</h1>
         <Center>
           <div className="bar">
             <DebounceInput
@@ -128,6 +128,7 @@ const Head = styled.header`
     font-family: "Passion One";
     font-size: 49px;
     font-weight: 700;
+    cursor: pointer;
   }
   
   .right {
