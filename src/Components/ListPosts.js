@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import { AiOutlineHeart } from "react-icons/ai";
+import { BsFillTrashFill, BsFillPencilFill } from "react-icons/bs";
 
 export default function ListPosts({ posts }) {
+  const user = JSON.parse(localStorage.getItem("userData"));
 
   return (
     <Posts>
@@ -13,7 +15,15 @@ export default function ListPosts({ posts }) {
             <h3>X Likes</h3> {/* Colocar número de likes */}
           </div>
           <div className="right">
-            <h2>{ post.userName }</h2>
+            <span className="top-link">
+              <h2>{ post.userName }</h2>
+              {user.userId === post.userId ?
+                <span className="edit-delete">
+                  <BsFillPencilFill size={ "20px" } style={{ "margin-right": '8px', "cursor": 'pointer' }} />
+                  <BsFillTrashFill size={ "20px" } style={{ "cursor": 'pointer' }} />
+                </span>
+              : <></>}
+            </span>
             <h2>{ post.postText }</h2>
             <Link>
               <div className="texts">
@@ -88,9 +98,17 @@ const Posts = styled.div`
     display: flex;
     flex-direction: column;
 
+    .top-link {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+    }
+
     h2:first-child {
       font-size: 19px;
       font-weight: 400;
+
+      margin-bottom: 5px;
     }
 
     h2:nth-child(2) {
