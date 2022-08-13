@@ -30,9 +30,48 @@ export default function Header({ isLoading }) {
   }, [search]);
 
   return (
-    <Head>
-      <h1>linkr</h1>
-      <Center>
+    <>
+      <Head>
+        <h1>linkr</h1>
+        <Center>
+          <div className="bar">
+            <DebounceInput
+              type="text"
+              placeholder="Search for people"
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+              }}
+              debounceTimeout={300}
+              disabled={isLoading}
+            />
+            <button><AiOutlineSearch color="#C6C6C6" size={"21px"} /></button>
+          </div>
+          {showSearchUsers ?
+          <div className="list-user">
+            {(usersList.length >= 1) ?
+              usersList.map((user, index) => 
+                <div className="user" key={index} onClick={() => {
+                    setSearch('');
+                    navigate(`/user/${user.id}`);
+                  }}>
+                  <img src={user.userPhoto} alt="" />
+                  <h2>{user.name}</h2>
+                </div>
+              )
+            :
+              <h3>Não foram encontrados usuários.</h3>
+            }
+          </div>
+          : <></>
+          }
+        </Center>
+        <div className="right">
+          <BsChevronDown color="#FFFFFF"size={"21px"} />
+          <img src={user.photo} alt="usuario" />
+        </div>
+      </Head>
+      <MobileSearchBar>
         <div className="bar">
           <DebounceInput
             type="text"
@@ -47,29 +86,25 @@ export default function Header({ isLoading }) {
           <button><AiOutlineSearch color="#C6C6C6" size={"21px"} /></button>
         </div>
         {showSearchUsers ?
-        <div className="list-user">
-          {(usersList.length >= 1) ?
-            usersList.map((user, index) => 
-              <div className="user" key={index} onClick={() => {
-                  setSearch('');
-                  navigate(`/user/${user.id}`);
-                }}>
-                <img src={user.userPhoto} alt="" />
-                <h2>{user.name}</h2>
-              </div>
-            )
-          :
-            <h3>Não foram encontrados usuários.</h3>
-          }
-        </div>
-        : <></>
+          <div className="list-user">
+            {(usersList.length >= 1) ?
+              usersList.map((user, index) => 
+                <div className="user" key={index} onClick={() => {
+                    setSearch('');
+                    navigate(`/user/${user.id}`);
+                  }}>
+                  <img src={user.userPhoto} alt="" />
+                  <h2>{user.name}</h2>
+                </div>
+              )
+            :
+              <h3>Não foram encontrados usuários.</h3>
+            }
+          </div>
+          : <></>
         }
-      </Center>
-      <div className="right">
-        <BsChevronDown color="#FFFFFF"size={"21px"} />
-        <img src={user.photo} alt="usuario" />
-      </div>
-    </Head>
+      </MobileSearchBar>
+    </> 
   );
 }
 
@@ -108,6 +143,19 @@ const Head = styled.header`
       margin-left: 10px;
     }
   }
+
+  @media screen and (max-width: 720px) {
+    h1 {
+      font-size: 45px;
+    }
+    .right {
+
+      img {
+        width: 40px;
+        height: 40px;
+      }
+    }
+  }
 `;
 
 const Center = styled.div`
@@ -132,7 +180,7 @@ const Center = styled.div`
       outline: none;
       border-radius: 8px;
 
-      width: 100%;
+      width: 85%;
       padding: 0 15px;
 
       ::placeholder {
@@ -145,7 +193,8 @@ const Center = styled.div`
       background-color: #FFFFFF;
       border: none;
       border-radius: 8px;
-      margin-right: 8px;
+
+      width: 15%;
     }
   }
 
@@ -157,7 +206,7 @@ const Center = styled.div`
     padding: 14px 15px 10px 15px;
 
     position: absolute;
-    top: 40px;
+    top: 39px;
 
     h2, h3 {
         color: #515151;
@@ -166,9 +215,10 @@ const Center = styled.div`
         font-weight: 400;
       }
 
-      h3 {
-        margin-bottom: 13px;
-      }
+    h3 {
+      text-align: center;
+      margin-bottom: 13px;
+    }
 
     .user {
       display: flex;
@@ -189,4 +239,109 @@ const Center = styled.div`
     }
   }
   
+  @media screen and (max-width: 480px) {
+    display: none;
+  }
+`;
+
+const MobileSearchBar = styled.div`
+  display: none;
+  background-color: #333333;
+  border-radius: 8px;
+
+  width: 100%;
+  height: 45px;
+
+  position: fixed;
+  top: 80px;
+  left: 0;
+
+  .bar {
+    width: 90%;
+    height: 100%;
+    z-index: 1;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-self: center;
+
+    input {
+      font-size: 19px;
+      outline: none;
+      border-radius: 8px 0 0 8px;
+
+      width: 85%;
+      height: 100%;
+      padding: 0 15px;
+
+      ::placeholder {
+        color: #C6C6C6;
+        font-size: 19px;
+      }
+    }
+
+    button {
+      background-color: #FFFFFF;
+      border: none;
+      border-radius: 0 8px 8px 0;
+
+      width: 15%;
+      height: 100%;
+    }
+  }
+
+  .list-user {
+    background-color: #E7E7E7;
+    border-radius: 0 0 8px 8px;
+
+    width: 90%;
+    padding: 14px 15px 10px 15px;
+
+    position: absolute;
+    top: 39px;
+
+    h2, h3 {
+        color: #515151;
+        font-family: "Lato";
+        font-size: 19px;
+        font-weight: 400;
+      }
+
+    h3 {
+      text-align: center;
+      margin-top: 10px;
+      margin-bottom: 13px;
+    }
+
+    .user {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+
+      width: 100%;
+      margin-bottom: 13px;
+
+      img {
+        border-radius: 50%;
+        object-fit: cover;
+
+        width: 39px;
+        height: 39px;
+        margin-right: 12px;
+      }
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    .list-user {
+      h2, h3 {
+        font-size: 17px;
+      }
+    }
+  }
 `;
