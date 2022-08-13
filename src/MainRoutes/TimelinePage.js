@@ -181,6 +181,12 @@ const TitleLine = styled.div`
         font-size: 43px;
         color: #FFFFFF;
     }
+
+    @media screen and (max-width: 500px) {
+        h1 {
+            padding-left: 15px;
+        }
+    }
 `;
 
 const CreatePostContainer = styled.div`
@@ -192,6 +198,16 @@ const CreatePostContainer = styled.div`
     display: flex;
     flex-direction: row;
     padding: 15px;
+
+    @media screen and (max-width: 500px) {
+        height: 164px;
+        width: 100%;
+        border-radius: 0px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 5px;
+    }
 `;
 
 const UserPhoto = styled.div`
@@ -204,6 +220,10 @@ const UserPhoto = styled.div`
         height: 50px;
         border-radius: 50%;
         object-fit: cover;
+    }
+
+    @media screen and (max-width: 500px) {
+        display: none;
     }
 `;
 
@@ -218,6 +238,20 @@ const FormsContainer = styled.div`
         font-size: 20px;
         color: #707070;
         margin-bottom: 10px;
+    }
+
+    @media screen and (max-width: 500px) {
+        
+        align-items: center;
+        
+        h3 {
+            font-family: 'Lato';
+            font-style: normal;
+            font-weight: 300;
+            font-size: 17px;
+            color: #707070;
+            margin-bottom: 15px;
+        }
     }
 `;
 
@@ -243,6 +277,10 @@ const FormsInputUrl = styled.input`
     :disabled{
         opacity: 0.6;
     }
+
+    @media screen and (max-width: 500px) {
+        width: 345px;
+    }
 `;
 
 const FormsInputText = styled.input`
@@ -261,6 +299,11 @@ const FormsInputText = styled.input`
 
     :disabled{
         opacity: 0.6;
+    }
+
+    @media screen and (max-width: 500px) {
+        width: 345px;
+        height: 47px;
     }
 `;
 
@@ -287,6 +330,11 @@ const FormsButton = styled.button`
     :hover {
         cursor: pointer;
     }
+
+    @media screen and (max-width: 500px) {
+        width: 112px;
+        height: 22px;
+    }
 `;
 
 const PostsContainer = styled.div`
@@ -300,5 +348,9 @@ const PostsContainer = styled.div`
         color: #FFFFFF;
 
         margin-top: 30px;
+    }
+
+    @media screen and (max-width: 500px) {
+        width: 100%;
     }
 `;
