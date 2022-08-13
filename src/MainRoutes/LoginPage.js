@@ -14,7 +14,7 @@ export default function LoginPage() {
         <h2>save, share and discover the best links on the web</h2>
       </header>
       <LoginForms />
-      <Link to={"/register"}> First time? Create an account!</Link>
+      <Link to={"/signup"}> First time? Create an account!</Link>
     </Main>
   );
 }
