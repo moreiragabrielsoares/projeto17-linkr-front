@@ -36,7 +36,7 @@ export default function TimelinePage() {
             setIsLoading(false);
         }
         
-        promisse.catch((erro) => {alert(erro.response.data)});
+        promisse.catch((error) => {alert("An error occured while trying to fetch the posts, please refresh the page")});
 
 	}, []);
 
@@ -58,7 +58,16 @@ export default function TimelinePage() {
         
         request.then(postSuccess);
 
-        request.catch((erro) => {alert(erro.response.data); setIsFormDisabled(false); setIsLoading(false)});
+        request.catch((error) => {errorTreatment(error); alert(error.response.data); setIsFormDisabled(false); setIsLoading(false)});
+    }
+
+    function errorTreatment(error) {
+        
+        if (error.response.status == 500) {
+            return alert("An error occured while trying to fetch the posts, please refresh the page");
+        }
+
+        return alert(error.response.data);
     }
 
     function postSuccess(res) {
