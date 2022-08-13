@@ -42,7 +42,7 @@ export default function UserPage() {
                   <ListPosts posts={ userPosts } />
                 :
                   <div className="no-posts">
-                    <h2>Ainda não existem posts.</h2>
+                    <h2>There are no posts yet.</h2>
                   </div>
                 }
             </div>
