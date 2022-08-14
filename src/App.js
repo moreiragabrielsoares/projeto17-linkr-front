@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import React from "react";
 import LoginPage from "./MainRoutes/LoginPage";
 import RegisterPage from "./MainRoutes/RegisterPage";
+import TimelinePage from "./MainRoutes/TimelinePage";
 import UserPage from "./MainRoutes/UserPage";
 
 export default function App() {
@@ -11,6 +12,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/signup" element={<RegisterPage />} />
+        <Route path="/timeline" element={<TimelinePage />} />
         <Route path="/user/:id" element={<UserPage />} />
       </Routes>
     </BrowserRouter>
