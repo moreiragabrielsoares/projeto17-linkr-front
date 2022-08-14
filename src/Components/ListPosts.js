@@ -3,10 +3,53 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { BsFillTrashFill, BsFillPencilFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { ReactTagify } from "react-tagify";
+import { useEffect, useRef, useState } from "react";
+import axios from "axios";
 
 export default function ListPosts({ posts, userPage, modalIsOpen, setModalIsOpen, setIdPostForDelete }) {
+  const [postEdit, setPostEdit] = useState({postId: 0, postText: '', postUrl: ''});
+  const [isEditing, setIsEditing] = useState(false);
+  const [loadingEdit, setLoadingEdit] = useState(false);
   const user = JSON.parse(localStorage.getItem("userData"));
   const navigate = useNavigate();
+  const inputRef = useRef(null);
+  const config = {
+    headers: {
+      "Authorization": `Bearer ${user.token}`
+    }
+  };
+
+  useEffect(() => {
+    if(isEditing) {
+      inputRef.current.focus();
+    }
+  }, [isEditing])
+
+  useEffect(() => {
+    const handleKeybord = (event) => {
+       if (event.keyCode === 27 && isEditing) {
+        setIsEditing(false);
+      } else if (event.key === "Enter" && isEditing) {
+        setLoadingEdit(true);
+        const response = axios.put(`https://projeto17-back.herokuapp.com/timeline/${ postEdit.postId }`, { postText: postEdit.postText, postUrl: postEdit.postUrl }, config);
+        
+        response.then(() => {
+          document.location.reload();
+          setLoadingEdit(false);
+          setIsEditing(false);
+        });
+        response.catch((r) => {
+          alert(`Unable to save changes! Try again...`);
+          setLoadingEdit(false);
+        });
+      }
+    };
+    window.addEventListener('keydown', handleKeybord);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeybord);
+    };
+  }, [isEditing, postEdit]);
 
   const tagStyle = {
     color: 'crimson',
@@ -19,8 +62,13 @@ export default function ListPosts({ posts, userPage, modalIsOpen, setModalIsOpen
     //inserir a função para mudar de página
   }
 
+  function handleEditPost(id, text, url) {
+    setIsEditing(!isEditing);
+    setPostEdit({postText: text, postId: id, postUrl: url});
+  }
+
   return (
-    <Posts userPage={userPage}>
+    <Posts userPage={userPage} loadingEdit={loadingEdit}>
       {posts.map((post, index) =>
         <div className="post" key={ index }>
           <div className="left">
@@ -33,17 +81,28 @@ export default function ListPosts({ posts, userPage, modalIsOpen, setModalIsOpen
               <h2 onClick={() => navigate(`/user/${post.userId}`)}>{ post.userName }</h2>
               {user.userId === post.userId ?
                 <span className="edit-delete">
-                  <BsFillPencilFill size={ "20px" } style={{ "marginRight": '8px', "cursor": 'pointer' }} />
+                  <BsFillPencilFill size={ "20px" } style={{ "marginRight": '8px', "cursor": 'pointer' }} onClick={() => handleEditPost(post.postId, post.postText, post.postUrl)}/>
                   <BsFillTrashFill size={ "20px" } style={{ "cursor": 'pointer' }} onClick={() => { setModalIsOpen(true); setIdPostForDelete(post.postId) }} />
                 </span>
               : <></>}
             </span>
-            <ReactTagify
+            {(post.postId === postEdit.postId) && isEditing ? 
+              <input
+                type="text"
+                value={ postEdit.postText }
+                placeholder="Your comment..." 
+                onChange={(e) => setPostEdit({...postEdit, postText: e.target.value})}
+                ref={inputRef}
+                disabled={loadingEdit}
+              />
+            :
+              <ReactTagify
               tagStyle={tagStyle}
               tagClicked={(tag) => hashtagPage(tag)}
-            >
-              <h2>{ post.postText }</h2>
-            </ReactTagify>
+              >
+                <h2>{ post.postText }</h2>
+              </ReactTagify>
+            }
             <Link onClick={()=> window.open(post.postUrl, "_blank")}>
               <div className="texts">
                 <h2>{ post.urlTitle }</h2>
@@ -138,6 +197,22 @@ const Posts = styled.div`
       font-size: 17px;
       font-weight: 400;
 
+      margin: 7px 0;
+      margin-bottom: 18px;
+    }
+
+    input {
+      background-color: ${({ loadingEdit }) => loadingEdit ? "#EDEDED" : "#FFFFFF"};
+      border-radius: 7px;
+      outline: none;
+
+      color: #4C4C4C;
+      font-family: "Lato";
+      font-size: 17px;
+      font-weight: 400;
+
+      width: 100%;
+      padding: 6px 10px;
       margin: 7px 0;
       margin-bottom: 18px;
     }
