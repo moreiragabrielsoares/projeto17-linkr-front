@@ -194,8 +194,11 @@ const Center = styled.div`
       background-color: #FFFFFF;
       border: none;
       border-radius: 8px;
+      display: flex;
+      justify-content: flex-end;
 
       width: 15%;
+      padding-right: 3%;
     }
   }
 

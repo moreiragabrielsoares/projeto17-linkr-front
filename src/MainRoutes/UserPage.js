@@ -62,6 +62,7 @@ const Main = styled.main`
 
   width: 100%;
   height: 100vh;
+  margin-top: 72px;
 
   display: flex;
   justify-content: center;
@@ -70,7 +71,7 @@ const Main = styled.main`
 
 const Container = styled.div`
   width: 90%;
-  padding-top: 132px;
+  margin-top: 60px;
 
   display: flex;
   justify-content: center;
@@ -134,5 +135,9 @@ const Container = styled.div`
 
   @media screen and (max-width: 720px) {
     width: 100%;
+  }
+
+  @media screen and (max-width: 480px) {
+    margin-top: 90px;
   }
 `;
