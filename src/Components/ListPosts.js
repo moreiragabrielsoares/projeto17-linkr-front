@@ -3,7 +3,7 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { BsFillTrashFill, BsFillPencilFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 
-export default function ListPosts({ posts, userPage }) {
+export default function ListPosts({ posts, userPage, modalIsOpen, setModalIsOpen, setIdPostForDelete }) {
   const user = JSON.parse(localStorage.getItem("userData"));
   const navigate = useNavigate();
 
@@ -21,8 +21,8 @@ export default function ListPosts({ posts, userPage }) {
               <h2 onClick={() => navigate(`/user/${post.userId}`)}>{ post.userName }</h2>
               {user.userId === post.userId ?
                 <span className="edit-delete">
-                  <BsFillPencilFill size={ "20px" } style={{ "margin-right": '8px', "cursor": 'pointer' }} />
-                  <BsFillTrashFill size={ "20px" } style={{ "cursor": 'pointer' }} />
+                  <BsFillPencilFill size={ "20px" } style={{ "marginRight": '8px', "cursor": 'pointer' }} />
+                  <BsFillTrashFill size={ "20px" } style={{ "cursor": 'pointer' }} onClick={() => { setModalIsOpen(true); setIdPostForDelete(post.postId) }} />
                 </span>
               : <></>}
             </span>
