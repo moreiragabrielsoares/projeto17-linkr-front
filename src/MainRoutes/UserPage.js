@@ -14,8 +14,8 @@ export default function UserPage() {
 
   useEffect(() => {
     setIsLoading(true);
-    //const response = axios.get(`https://projeto17-back.herokuapp.com/user/${ id }`);
-    const response = axios.get(`http://localhost:5000/user/${ id }`);
+    const response = axios.get(`https://projeto17-back.herokuapp.com/user/${ id }`);
+    // const response = axios.get(`http://localhost:5000/user/${ id }`);
     
     response.then((r) => {
       setUserPosts([...r.data]);

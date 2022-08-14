@@ -1,12 +1,14 @@
 import styled from "styled-components";
 
-export const Main = styled.main`
-  width: 100%;
-  height: 130vh;
+export const Container = styled.div`
+  width: 37%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   background: #333333;
+  justify-content:center;
+  align-items:center;
   header {
     display: none;
   }
@@ -15,13 +17,18 @@ export const Main = styled.main`
     font-family: "Lato";
     line-height: 20px;
     text-decoration-line: underline;
-    margin-top:21px;
+    margin-top: 21px;
   }
-  @media only screen and (max-width: 748px) {
+  @media only screen and (max-width: 815px) {
+    width: 100%;
+    height: 130vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     header {
       display: flex;
       width: 100%;
-      min-height:175px;
+      min-height: 175px;
       background-color: #151515;
       box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
       color: #ffffff;
@@ -61,8 +68,8 @@ export const Form = styled.form`
     margin-top: -20px;
     color: #ffffff;
   }
-  svg{
-    padding-top:3px;
+  svg {
+    padding-top: 3px;
   }
 
   input {
@@ -99,4 +106,45 @@ export const Form = styled.form`
     font-size: 22px;
     line-height: 33px;
   }
+`;
+
+export const Main = styled.main`
+width:100%;
+height:100%;
+display:flex;
+`
+
+export const BannerComponent = styled.div`
+display: none;
+
+@media only screen and (min-width: 815px) {
+  display: flex;
+  width: 63%;
+  height: 100vh;
+  background: #151515;
+  box-shadow: 4px 0px 4px rgba(0, 0, 0, 0.25);
+  flex-direction:column;
+  justify-content:center;
+  h1 {
+    width: 233px;
+    height: 117px;
+    font-family: "Passion One";
+    font-weight: 700;
+    font-size: 106px;
+    line-height: 117px;
+    letter-spacing: 0.05em;
+    color: #ffffff;
+    margin-left:12%;
+  }
+  h2 {
+    width: 442px;
+    height: 128px;
+    font-family: "Oswald";
+    font-weight: 700;
+    font-size: 43px;
+    line-height: 64px;
+    color: #ffffff;
+    margin-left:12%;
+  }
+}
 `;
