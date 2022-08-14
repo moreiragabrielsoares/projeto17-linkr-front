@@ -2,10 +2,22 @@ import styled from "styled-components";
 import { AiOutlineHeart } from "react-icons/ai";
 import { BsFillTrashFill, BsFillPencilFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
+import { ReactTagify } from "react-tagify";
 
 export default function ListPosts({ posts, userPage }) {
   const user = JSON.parse(localStorage.getItem("userData"));
   const navigate = useNavigate();
+
+  const tagStyle = {
+    color: 'crimson',
+    fontWeight: 700,
+    cursor: 'pointer'
+  };
+
+  function hashtagPage(tag) {
+    console.log(`Cliquei na tag ${tag}`);
+    //inserir a função para mudar de página
+  }
 
   return (
     <Posts userPage={userPage}>
@@ -26,7 +38,12 @@ export default function ListPosts({ posts, userPage }) {
                 </span>
               : <></>}
             </span>
-            <h2>{ post.postText }</h2>
+            <ReactTagify
+              tagStyle={tagStyle}
+              tagClicked={(tag) => hashtagPage(tag)}
+            >
+              <h2>{ post.postText }</h2>
+            </ReactTagify>
             <Link onClick={()=> window.open(post.postUrl, "_blank")}>
               <div className="texts">
                 <h2>{ post.urlTitle }</h2>
