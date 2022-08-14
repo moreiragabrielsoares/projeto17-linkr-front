@@ -33,8 +33,8 @@ export default function ListPosts({ posts, userPage }) {
               <h2 onClick={() => navigate(`/user/${post.userId}`)}>{ post.userName }</h2>
               {user.userId === post.userId ?
                 <span className="edit-delete">
-                  <BsFillPencilFill size={ "20px" } style={{ "margin-right": '8px', "cursor": 'pointer' }} />
-                  <BsFillTrashFill size={ "20px" } style={{ "cursor": 'pointer' }} />
+                  <BsFillPencilFill size={ "15px" } style={{ "margin-right": '8px', "cursor": 'pointer' }} />
+                  <BsFillTrashFill size={ "15px" } style={{ "cursor": 'pointer' }} />
                 </span>
               : <></>}
             </span>
@@ -108,6 +108,7 @@ const Posts = styled.div`
     h3 {
       font-size: 11px;
       font-weight: 400;
+      text-align: center;
 
       margin-top: 3px;
     }
