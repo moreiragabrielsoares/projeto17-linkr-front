@@ -15,8 +15,8 @@ export default function ListPosts({ posts, userPage, modalIsOpen, setModalIsOpen
   };
 
   function hashtagPage(tag) {
-    console.log(`Cliquei na tag ${tag}`);
-    //inserir a função para mudar de página
+    const hashtag = tag.slice(1, tag.length);
+    navigate(`/hashtag/${hashtag}`);
   }
 
   return (
