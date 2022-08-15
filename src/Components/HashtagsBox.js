@@ -6,7 +6,7 @@ import styled from "styled-components";
 
 
 
-export default function HashtagsBox() {
+export default function HashtagsBox({ reloadPosts, postsList }) {
 
     const navigate = useNavigate();
 
@@ -35,7 +35,7 @@ export default function HashtagsBox() {
         
         promisse.catch((error) => {alert("An error occured while trying to fetch the posts, please refresh the page")});
 
-	}, []);
+	}, [reloadPosts, postsList]);
 
     function hashtagPage(hashtag) {
         console.log(hashtag);

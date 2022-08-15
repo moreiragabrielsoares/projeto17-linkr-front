@@ -67,7 +67,7 @@ export default function UserPage() {
                     }
                 </div>
                 <div className="right-side">
-                  <HashtagsBox />
+                  <HashtagsBox reloadPosts={reloadPosts} />
                 </div>
               </Container>
           </Main>
