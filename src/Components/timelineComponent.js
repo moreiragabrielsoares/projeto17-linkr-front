@@ -13,20 +13,21 @@ export function Post({
   setModalIsOpen,
   setIdPostForDelete,
   addLike,
-  handleEditPost,
   removeLike,
-  index,
-  setLoadingEdit,
-  isEditing,
-  setIsEditing,
-  postEdit,
   config,
-  setPostEdit,
-  loadingEdit,
+  loadingEdit, 
+  setLoadingEdit
 }) {
+  
   const tooltip = "";
-
   const user = JSON.parse(localStorage.getItem("userData"));
+  const [isEditing, setIsEditing] = useState(false);
+  const [postEdit, setPostEdit] = useState({
+    postId: 0,
+    postText: "",
+    postUrl: "",
+  });
+  
   const inputRef = useRef(null);
   const navigate = useNavigate();
   const tagStyle = {
@@ -35,16 +36,17 @@ export function Post({
     cursor: "pointer",
   };
 
-  function hashtagPage(tag) {
-    const hashtag = tag.slice(1, tag.length);
-    navigate(`/hashtag/${hashtag}`);
-  }
   useEffect(() => {
     if (isEditing) {
       inputRef.current.focus();
     }
   }, [isEditing]);
 
+  function hashtagPage(tag) {
+    const hashtag = tag.slice(1, tag.length);
+    navigate(`/hashtag/${hashtag}`);
+  }
+  
   useEffect(() => {
     const handleKeybord = (event) => {
       if (event.keyCode === 27 && isEditing) {
@@ -81,7 +83,7 @@ export function Post({
   }
 
   return (
-    <div className="post" key={index}>
+    <div className="post">
       <div className="left">
         <img
           src={post.userPhoto}

@@ -17,7 +17,7 @@ export default function UserPage() {
   const [idPostForDelete, setIdPostForDelete] = useState();
   const [reloadPosts, setReloadPosts] = useState(true);
   const userPage = true;
-
+  
   useEffect(() => {
     setIsLoading(true);
     const response = axios.get(`https://projeto17-back.herokuapp.com/user/${ id }`);
@@ -26,7 +26,7 @@ export default function UserPage() {
       setUserPosts([...r.data]);
       setIsLoading(false);
     }).catch((r) => {
-      alert(`Erro ${ r.response.status }!`);
+      alert(`Error ${ r.response.status }!`);
       setIsLoading(false);
     });
   }, [id, reloadPosts]);
@@ -54,9 +54,8 @@ export default function UserPage() {
                   </div>
                   {userPosts[0].postId ?
                       <ListPosts
-                        posts={ userPosts }
+                        posts={userPosts}
                         userPage={userPage}
-                        modalIsOpen={modalIsOpen}
                         setModalIsOpen={setModalIsOpen}
                         setIdPostForDelete={setIdPostForDelete}
                       />

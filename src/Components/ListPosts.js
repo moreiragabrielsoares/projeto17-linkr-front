@@ -1,27 +1,16 @@
 import axios from "axios";
 import { Post } from "./timelineComponent";
 import { Posts } from "../styledComponents/timelineStyledComponents";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 
-export default function ListPosts({ posts, userPage, setIdPostForDelete }) {
+export default function ListPosts({ posts, userPage, setModalIsOpen, setIdPostForDelete }) {
   const user = JSON.parse(localStorage.getItem("userData"));
   const config = {
     headers: {
       Authorization: `Bearer ${user.token}`,
     },
   };
-  const [isEditing, setIsEditing] = useState(false);
-  const [postEdit, setPostEdit] = useState({
-    postId: 0,
-    postText: "",
-    postUrl: "",
-  });
-  
   const [loadingEdit, setLoadingEdit] = useState(false);
-  function handleEditPost(id, text, url) {
-    setIsEditing(!isEditing);
-    setPostEdit({ postText: text, postId: id, postUrl: url });
-  }
 
   function addLike(postId) {
     let body = {
@@ -72,23 +61,19 @@ export default function ListPosts({ posts, userPage, setIdPostForDelete }) {
 
   return (
     <Posts userPage={userPage} loadingEdit={loadingEdit}>
-      {user.length!==0?posts?.map((post, index) => (
+      {user.length !== 0 ? posts?.map((post, index) => (
         <Post
+          key={index}
           setIdPostForDelete={setIdPostForDelete}
           post={post}
-          handleEditPost={handleEditPost}
           addLike={addLike}
-          index={index}
           removeLike={removeLike}
-          setLoadingEdit={setLoadingEdit}
-          isEditing={isEditing}
-          setIsEditing={setIsEditing}
-          postEdit={postEdit}
           config={config}
-          setPostEdit={setPostEdit}
           loadingEdit={loadingEdit}
+          setLoadingEdit={setLoadingEdit}
+          setModalIsOpen={setModalIsOpen}
         />
-      )):""}
+      )):<></>}
     </Posts>
   );
 }
