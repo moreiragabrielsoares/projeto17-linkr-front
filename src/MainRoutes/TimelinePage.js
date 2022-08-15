@@ -9,6 +9,7 @@ import styled from "styled-components";
 import Header from "../Components/Header";
 import ListPosts from "../Components/ListPosts";
 import HashtagsBox from "../Components/HashtagsBox";
+import ModalWindow from "../Components/Modal";
 
 
 export default function TimelinePage() {
@@ -25,6 +26,9 @@ export default function TimelinePage() {
     
     const [postsList, setPostsList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [idPostForDelete, setIdPostForDelete] = useState();
+    const [reloadPosts, setReloadPosts] = useState(true);
 
     useEffect(() => {
 
@@ -38,7 +42,7 @@ export default function TimelinePage() {
         
         promisse.catch((error) => {alert("An error occured while trying to fetch the posts, please refresh the page")});
 
-	}, []);
+	}, [reloadPosts]);
 
     const [postUrl, setPostUrl] = useState("");
     const [postText, setPostText] = useState("");
@@ -87,86 +91,104 @@ export default function TimelinePage() {
             return (<h2>There are no posts yet.</h2>);
         }
 
-        return (<ListPosts posts={ postsList } />)
+        return (<ListPosts 
+                    posts={ postsList } 
+                    modalIsOpen={modalIsOpen}
+                    setModalIsOpen={setModalIsOpen}
+                    setIdPostForDelete={setIdPostForDelete}
+                />)
     }
-    
+
     return (
-        <BodyContainer>
+        <>
 
-            <Header />
+            <ModalWindow
+                modalIsOpen={modalIsOpen}
+                setModalIsOpen={setModalIsOpen}
+                idPostForDelete={idPostForDelete}
+                reloadPosts={reloadPosts}
+                setReloadPosts={setReloadPosts}
+            />
 
-            <ContentContainer>
+            <BodyContainer modalIsOpen={modalIsOpen}>
 
-                <LeftContainer>
+                <Header />
 
-                    <TitleLine>
-                        <h1>timeline</h1>
-                    </TitleLine>
+                <ContentContainer>
 
-                    <CreatePostContainer>
+                    <LeftContainer>
 
-                        <UserPhoto>
-                            <img src={userData.photo}/>
-                        </UserPhoto>
+                        <TitleLine>
+                            <h1>timeline</h1>
+                        </TitleLine>
 
-                        <FormsContainer>
+                        <CreatePostContainer>
 
-                            <h3>What are you going to share today?</h3>
+                            <UserPhoto>
+                                <img src={userData.photo}/>
+                            </UserPhoto>
 
-                            <Forms onSubmit={createPost}>
+                            <FormsContainer>
 
-                                <FormsInputUrl 
-                                    id="postUrl" 
-                                    placeholder="http://..." 
-                                    onChange={e => setPostUrl(e.target.value)} 
-                                    value={postUrl}
-                                    type="text"
-                                    required
-                                    disabled={isFormDisabled}
-                                />
-                                <FormsInputText 
-                                    id="postText" 
-                                    placeholder="Your comment..." 
-                                    onChange={e => setPostText(e.target.value)} 
-                                    value={postText}
-                                    type="text"
-                                    disabled={isFormDisabled}
-                                />
+                                <h3>What are you going to share today?</h3>
 
-                                {isFormDisabled ? 
-                                    (<FormsButton type="submit" disabled={isFormDisabled}>Publishing...</FormsButton>) 
-                                    : (<FormsButton type="submit" disabled={isFormDisabled}>Publish</FormsButton>)
-                                }
-            
-                            </Forms>
+                                <Forms onSubmit={createPost}>
 
-                        </FormsContainer>
+                                    <FormsInputUrl 
+                                        id="postUrl" 
+                                        placeholder="http://..." 
+                                        onChange={e => setPostUrl(e.target.value)} 
+                                        value={postUrl}
+                                        type="text"
+                                        required
+                                        disabled={isFormDisabled}
+                                    />
+                                    <FormsInputText 
+                                        id="postText" 
+                                        placeholder="Your comment..." 
+                                        onChange={e => setPostText(e.target.value)} 
+                                        value={postText}
+                                        type="text"
+                                        disabled={isFormDisabled}
+                                    />
 
-                    </CreatePostContainer>
+                                    {isFormDisabled ? 
+                                        (<FormsButton type="submit" disabled={isFormDisabled}>Publishing...</FormsButton>) 
+                                        : (<FormsButton type="submit" disabled={isFormDisabled}>Publish</FormsButton>)
+                                    }
+                
+                                </Forms>
 
-                    <PostsContainer>
+                            </FormsContainer>
 
-                        {checkPosts()}
+                        </CreatePostContainer>
 
-                    </PostsContainer>
+                        <PostsContainer>
 
-                </LeftContainer>
+                            {checkPosts()}
 
-                <RightContainer>
-                    
-                    <HashtagsBox></HashtagsBox>
+                        </PostsContainer>
 
-                </RightContainer>                
+                    </LeftContainer>
 
-            </ContentContainer>
+                    <RightContainer>
+                        
+                        <HashtagsBox reloadPosts={reloadPosts} postsList={postsList}></HashtagsBox>
 
-        </BodyContainer>
+                    </RightContainer>                
+
+                </ContentContainer>
+
+            </BodyContainer>
+
+        </>
     );
 }
 
 
 const BodyContainer = styled.div`
     background: #333333;
+    opacity: ${({modalIsOpen}) => modalIsOpen ? "25%" : "100%" };
     width: 100%;
     min-height: 100vh;
     position: absolute;
