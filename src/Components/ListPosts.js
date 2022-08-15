@@ -219,6 +219,12 @@ const Posts = styled.div`
     }
   }
 
+  @media screen and (max-width: 611px) {
+    .post {
+      border-radius: 0;
+    }
+  }
+
   @media screen and (max-width: 480px) {
     .right {
       h2 {
