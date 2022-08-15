@@ -57,6 +57,7 @@ export default function Header({ isLoading }) {
               debounceTimeout={300}
               disabled={isLoading}
             />
+
             <button>
               <AiOutlineSearch color="#C6C6C6" size={"21px"} />
             </button>
@@ -122,10 +123,11 @@ export default function Header({ isLoading }) {
                   <img src={user.userPhoto} alt="" />
                   <h2>{user.name}</h2>
                 </div>
-              ))
-            ) : (
-              <h3>Não foram encontrados usuários.</h3>
-            )}
+
+              )
+            :
+              <h3>There are no users with this name</h3>
+            }
           </div>
         ) : (
           <></>
@@ -243,8 +245,11 @@ const Center = styled.div`
       background-color: #ffffff;
       border: none;
       border-radius: 8px;
+      display: flex;
+      justify-content: flex-end;
 
       width: 15%;
+      padding-right: 3%;
     }
   }
 
@@ -298,19 +303,19 @@ const Center = styled.div`
 const MobileSearchBar = styled.div`
   display: none;
   background-color: #333333;
-  border-radius: 8px;
 
   width: 100%;
   height: 45px;
+  padding-top: 8px;
 
-  position: fixed;
-  top: 80px;
+  position: absolute;
+  top: 72px;
   left: 0;
 
   .bar {
     width: 90%;
     height: 100%;
-    z-index: 1;
+    //z-index: 1;
 
     display: flex;
     justify-content: space-between;

@@ -5,12 +5,17 @@ import axios from "axios";
 import { ThreeCircles } from "react-loader-spinner";
 
 import Header from "../Components/Header";
+import ModalWindow from "../Components/Modal";
 import ListPosts from "../Components/ListPosts";
+import HashtagsBox from "../Components/HashtagsBox";
 
 export default function UserPage() {
   const { id } = useParams();
-  const [userPosts, setUserPosts] = useState({});
+  const [userPosts, setUserPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [idPostForDelete, setIdPostForDelete] = useState();
+  const [reloadPosts, setReloadPosts] = useState(true);
   const userPage = true;
 
   useEffect(() => {
@@ -24,12 +29,19 @@ export default function UserPage() {
       alert(`Erro ${ r.response.status }!`);
       setIsLoading(false);
     });
-  }, [id]);
+  }, [id, reloadPosts]);
 
   return (
     <>
       <Header isLoading={ isLoading } />
-      <Main isLoading={ isLoading }>
+      <ModalWindow
+        modalIsOpen={modalIsOpen}
+        setModalIsOpen={setModalIsOpen}
+        idPostForDelete={idPostForDelete}
+        reloadPosts={reloadPosts}
+        setReloadPosts={setReloadPosts}
+      />
+      <Main isLoading={ isLoading } modalIsOpen={modalIsOpen} >
         {isLoading ? 
           <ThreeCircles color={"#FFFFFF"}/> 
           : 
@@ -40,7 +52,13 @@ export default function UserPage() {
                 <h1>{ userPosts[0].userName }'s posts</h1>
               </div>
                {userPosts[0].postId ?
-                  <ListPosts posts={ userPosts } userPage={userPage} />
+                  <ListPosts
+                    posts={ userPosts }
+                    userPage={userPage}
+                    modalIsOpen={modalIsOpen}
+                    setModalIsOpen={setModalIsOpen}
+                    setIdPostForDelete={setIdPostForDelete}
+                  />
                 :
                   <div className="no-posts">
                     <h2>There are no posts yet.</h2>
@@ -48,7 +66,7 @@ export default function UserPage() {
                 }
             </div>
             <div className="right-side">
-              {/* <Trendings /> */}
+              <HashtagsBox />
             </div>
           </Container>
         }
@@ -59,9 +77,11 @@ export default function UserPage() {
 
 const Main = styled.main`
   background-color: #333333;
+  opacity: ${({modalIsOpen}) => modalIsOpen ? "25%" : "100%" };
 
   width: 100%;
   height: 100vh;
+  margin-top: 72px;
 
   display: flex;
   justify-content: center;
@@ -69,8 +89,7 @@ const Main = styled.main`
 `;
 
 const Container = styled.div`
-  width: 90%;
-  padding-top: 132px;
+  margin-top: 60px;
 
   display: flex;
   justify-content: center;
@@ -80,7 +99,7 @@ const Container = styled.div`
     flex-direction: column;
     align-items: flex-start;
 
-    width: 70%;
+    width: 611px;
 
     .top {
       margin-left: 18px;
@@ -120,19 +139,24 @@ const Container = styled.div`
 
   .right-side {
     width: 30%;
+    margin-top: 12px;
   }
 
-  @media screen and (max-width: 900px) {
+  @media screen and (max-width: 940px) {
     .right-side {
       display: none;
     }
+  }
+
+  @media screen and (max-width: 611px) {
+    width: 100%;
 
     .left-side {
       width: 100%;
     }
   }
 
-  @media screen and (max-width: 720px) {
-    width: 100%;
+  @media screen and (max-width: 480px) {
+    margin-top: 90px;
   }
 `;

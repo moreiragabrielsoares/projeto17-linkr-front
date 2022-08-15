@@ -1,6 +1,6 @@
 import React from "react";
 import { useState , useEffect , useContext} from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
@@ -8,10 +8,12 @@ import styled from "styled-components";
 
 import Header from "../Components/Header";
 import ListPosts from "../Components/ListPosts";
-import HashtagsBox from "../Components/HashtagsBox";
 
 
-export default function TimelinePage() {
+export default function HashtagPage() {
+
+    const { hashtag } = useParams();
+    console.log(hashtag);
     
     const navigate = useNavigate();
 
@@ -28,7 +30,7 @@ export default function TimelinePage() {
 
     useEffect(() => {
 
-		const promisse = axios.get("https://projeto17-back.herokuapp.com/timeline", config);
+		const promisse = axios.get(`https://projeto17-back.herokuapp.com/hashtag/${hashtag}`, config);
 
 		promisse.then(success);
 
@@ -45,39 +47,7 @@ export default function TimelinePage() {
     const [postText, setPostText] = useState("");
     const [isFormDisabled, setIsFormDisabled] = useState(false);
 
-    function createPost(event) {
-        event.preventDefault();
-        setIsFormDisabled(true);
-        setIsLoading(true);
 
-        const postObj = {
-            postText,
-            postUrl
-        }
-
-        const request = axios.post("https://projeto17-back.herokuapp.com/timeline", postObj, config);
-        
-        request.then(postSuccess);
-
-        request.catch((error) => {errorTreatment(error); alert(error.response.data); setIsFormDisabled(false); setIsLoading(false)});
-    }
-
-    function errorTreatment(error) {
-        
-        if (error.response.status === 500) {
-            return alert("An error occured while trying to fetch the posts, please refresh the page");
-        }
-
-        return alert(error.response.data);
-    }
-
-    function postSuccess(res) {
-        setIsFormDisabled(false);
-        setPostText("");
-        setPostUrl("");
-        setPostsList(res.data);
-        setIsLoading(false);
-    }
 
     function checkPosts () {
         if (isLoading) {
@@ -101,49 +71,8 @@ export default function TimelinePage() {
                 <LeftContainer>
 
                     <TitleLine>
-                        <h1>timeline</h1>
+                        <h1>{`#${hashtag}`}</h1>
                     </TitleLine>
-
-                    <CreatePostContainer>
-
-                        <UserPhoto>
-                            <img src={userData.photo}/>
-                        </UserPhoto>
-
-                        <FormsContainer>
-
-                            <h3>What are you going to share today?</h3>
-
-                            <Forms onSubmit={createPost}>
-
-                                <FormsInputUrl 
-                                    id="postUrl" 
-                                    placeholder="http://..." 
-                                    onChange={e => setPostUrl(e.target.value)} 
-                                    value={postUrl}
-                                    type="text"
-                                    required
-                                    disabled={isFormDisabled}
-                                />
-                                <FormsInputText 
-                                    id="postText" 
-                                    placeholder="Your comment..." 
-                                    onChange={e => setPostText(e.target.value)} 
-                                    value={postText}
-                                    type="text"
-                                    disabled={isFormDisabled}
-                                />
-
-                                {isFormDisabled ? 
-                                    (<FormsButton type="submit" disabled={isFormDisabled}>Publishing...</FormsButton>) 
-                                    : (<FormsButton type="submit" disabled={isFormDisabled}>Publish</FormsButton>)
-                                }
-            
-                            </Forms>
-
-                        </FormsContainer>
-
-                    </CreatePostContainer>
 
                     <PostsContainer>
 
@@ -151,13 +80,7 @@ export default function TimelinePage() {
 
                     </PostsContainer>
 
-                </LeftContainer>
-
-                <RightContainer>
-                    
-                    <HashtagsBox></HashtagsBox>
-
-                </RightContainer>                
+                </LeftContainer>                
 
             </ContentContainer>
 
