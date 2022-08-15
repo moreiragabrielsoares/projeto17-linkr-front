@@ -8,7 +8,6 @@ export const Container = styled.div`
   align-items: center;
   background: #333333;
   justify-content:center;
-  align-items:center;
   header {
     display: none;
   }
@@ -25,6 +24,7 @@ export const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content:start;
     header {
       display: flex;
       width: 100%;
