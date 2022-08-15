@@ -33,7 +33,6 @@ export default function UserPage() {
 
   return (
     <>
-      <Header isLoading={ isLoading } />
       <ModalWindow
         modalIsOpen={modalIsOpen}
         setModalIsOpen={setModalIsOpen}
@@ -41,51 +40,66 @@ export default function UserPage() {
         reloadPosts={reloadPosts}
         setReloadPosts={setReloadPosts}
       />
-      <Main isLoading={ isLoading } modalIsOpen={modalIsOpen} >
+      <Body isLoading={ isLoading } modalIsOpen={modalIsOpen} >
+        <Header />
         {isLoading ? 
           <ThreeCircles color={"#FFFFFF"}/> 
-          : 
-          <Container>
-            <div className="left-side">
-              <div className="top">
-                <img src={ userPosts[0].userPhoto } alt="" />
-                <h1>{ userPosts[0].userName }'s posts</h1>
-              </div>
-               {userPosts[0].postId ?
-                  <ListPosts
-                    posts={ userPosts }
-                    userPage={userPage}
-                    modalIsOpen={modalIsOpen}
-                    setModalIsOpen={setModalIsOpen}
-                    setIdPostForDelete={setIdPostForDelete}
-                  />
-                :
-                  <div className="no-posts">
-                    <h2>There are no posts yet.</h2>
+        : 
+          <Main isLoading={ isLoading } >
+              <Container>
+                <div className="left-side">
+                  <div className="top">
+                    <img src={ userPosts[0].userPhoto } alt="" />
+                    <h1>{ userPosts[0].userName }'s posts</h1>
                   </div>
-                }
-            </div>
-            <div className="right-side">
-              <HashtagsBox />
-            </div>
-          </Container>
+                  {userPosts[0].postId ?
+                      <ListPosts
+                        posts={ userPosts }
+                        userPage={userPage}
+                        modalIsOpen={modalIsOpen}
+                        setModalIsOpen={setModalIsOpen}
+                        setIdPostForDelete={setIdPostForDelete}
+                      />
+                    :
+                      <div className="no-posts">
+                        <h2>There are no posts yet.</h2>
+                      </div>
+                    }
+                </div>
+                <div className="right-side">
+                  <HashtagsBox />
+                </div>
+              </Container>
+          </Main>
         }
-      </Main>
+      </Body>
     </>
   );
 }
 
-const Main = styled.main`
-  background-color: #333333;
+const Body = styled.div`
+  background: #333333;
   opacity: ${({modalIsOpen}) => modalIsOpen ? "25%" : "100%" };
 
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
+
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: ${({isLoading}) => isLoading ? "center" : "inherit"};
+  align-items: ${({isLoading}) => isLoading ? "center" : "inherit"};
+`;
+
+const Main = styled.div`
+  background-color: #333333;
+
+  width: 100%;
+  height: 100%;
   margin-top: 72px;
 
   display: flex;
   justify-content: center;
-  align-items: ${({isLoading}) => isLoading ? "center" : "inherit"};
 `;
 
 const Container = styled.div`
