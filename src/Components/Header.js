@@ -87,7 +87,7 @@ export default function Header({ isLoading }) {
           )}
         </Center>
         <div className="right" onClick={ToggleLogout}>
-          <BsChevronDown color="#FFFFFF" size={"21px"} />
+          <BsChevronDown color="#FFFFFF" size={"21px"} style={{ "cursor": 'pointer' }}/>
           <img src={user.photo} alt="usuario" />
           <div className={`logout ${logout ? "logoutActive" : ""}`} onClick={logoutUser}>Logout</div>
         </div>
@@ -172,6 +172,7 @@ const Head = styled.header`
       background: #171717;
       border-radius: 0px 0px 20px 20px;
       font-family: "Lato";
+      cursor: pointer;
       display: flex;
       align-items: center;
       padding-left: 30px;

@@ -24,7 +24,7 @@ export default function ModalWindow({ modalIsOpen, setModalIsOpen, idPostForDele
       setLoading(false);
     });
     response.catch((r) => {
-      alert(`Erro ${ r.response.status }!`);
+      alert(`Error ${ r.response.status }! Try again later...`);
       setLoading(false);
     });
   }
@@ -32,7 +32,7 @@ export default function ModalWindow({ modalIsOpen, setModalIsOpen, idPostForDele
   return (
     <Modal modalIsOpen={modalIsOpen}>
       <h1>Are you sure you want to delete this post?</h1>
-      {loading ? <ThreeDots color="#1877F2" width={40} height={20} /> :
+      {loading ? <ThreeDots color="#1877F2" width={40} height={40} /> :
       <div className="buttons">
         <button 
           onClick={() => setModalIsOpen(false)}
