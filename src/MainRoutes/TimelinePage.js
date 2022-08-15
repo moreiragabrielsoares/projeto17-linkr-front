@@ -174,7 +174,7 @@ export default function TimelinePage() {
 
                     <RightContainer>
                         
-                        <HashtagsBox></HashtagsBox>
+                        <HashtagsBox reloadPosts={reloadPosts} postsList={postsList}></HashtagsBox>
 
                     </RightContainer>                
 
