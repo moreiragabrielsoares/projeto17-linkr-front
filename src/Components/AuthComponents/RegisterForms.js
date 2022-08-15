@@ -135,8 +135,8 @@ export default function RegisterForms() {
       >
         <FaInfoCircle />
         Deve ser um e-mail válido.
-        Deve ter 2 dominios.
-        Ex: example@example.com.br
+        Deve ter 1 dominio.
+        Ex: example@example.com
       </h4>
       <input
         type="password"
