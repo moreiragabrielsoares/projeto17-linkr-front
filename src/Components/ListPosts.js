@@ -119,21 +119,7 @@ const Posts = styled.div`
     display: flex;
     flex-direction: column;
 
-    .top-link {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    h2:first-child {
-      cursor: ${({ userPage }) => userPage ? "initial" : "pointer"};
-      font-size: 19px;
-      font-weight: 400;
-
-      margin-bottom: 5px;
-    }
-
-    h2:nth-child(2) {
+    h2 {
       color: #B7B7B7;
       font-size: 17px;
       font-weight: 400;
@@ -141,16 +127,33 @@ const Posts = styled.div`
       margin: 7px 0;
       margin-bottom: 18px;
     }
+
+    .top-link {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+
+      h2 {
+        color: #FFFFFF;
+        cursor: ${({ userPage }) => userPage ? "initial" : "pointer"};
+        font-size: 19px;
+        font-weight: 400;
+
+        margin-bottom: 5px;
+      }
+    }
   }
 
   @media screen and (max-width: 480px) {
     .right {
-      h2:first-child {
-        font-size: 17px;
+      h2 {
+        font-size: 15px;
       }
 
-      h2:nth-child(2) {
-        font-size: 15px;
+      .top-link {
+        h2 {
+          font-size: 17px;
+        }
       }
     }
   }

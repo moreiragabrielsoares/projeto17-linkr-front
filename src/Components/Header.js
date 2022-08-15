@@ -60,7 +60,7 @@ export default function Header({ isLoading }) {
                 </div>
               )
             :
-              <h3>Não foram encontrados usuários.</h3>
+              <h3>There are no users with this name</h3>
             }
           </div>
           : <></>
@@ -98,7 +98,7 @@ export default function Header({ isLoading }) {
                 </div>
               )
             :
-              <h3>Não foram encontrados usuários.</h3>
+              <h3>There are no users with this name</h3>
             }
           </div>
           : <></>

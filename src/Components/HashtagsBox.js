@@ -119,5 +119,6 @@ const HashtagLine = styled.div`
     font-size: 19px;
     letter-spacing: 0.05em;
     color: #FFFFFF;
+    cursor: pointer;
     margin: 5px 0;
 `;
