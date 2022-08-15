@@ -79,7 +79,7 @@ export default function Header({ isLoading }) {
                   </div>
                 ))
               ) : (
-                <h3>Não foram encontrados usuários.</h3>
+                <h3>There are no users with this name</h3>
               )}
             </div>
           ) : (
@@ -110,7 +110,7 @@ export default function Header({ isLoading }) {
         </div>
         {showSearchUsers ? (
           <div className="list-user">
-            {usersList.length >= 1 ? (
+            {usersList.length >= 1 ?
               usersList.map((user, index) => (
                 <div
                   className="user"
@@ -123,8 +123,7 @@ export default function Header({ isLoading }) {
                   <img src={user.userPhoto} alt="" />
                   <h2>{user.name}</h2>
                 </div>
-
-              )
+              ))
             :
               <h3>There are no users with this name</h3>
             }
