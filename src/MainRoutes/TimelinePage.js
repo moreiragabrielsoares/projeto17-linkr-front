@@ -31,7 +31,6 @@ export default function TimelinePage() {
 		const promisse = axios.get("https://projeto17-back.herokuapp.com/timeline", config);
 
 		promisse.then(success);
-
         function success (res) {
             setPostsList(res.data);
             setIsLoading(false);
