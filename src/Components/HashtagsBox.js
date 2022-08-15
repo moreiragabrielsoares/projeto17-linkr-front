@@ -29,7 +29,6 @@ export default function HashtagsBox({ reloadPosts, postsList }) {
 
         function success (res) {
             setHashtagsList(res.data);
-            console.log(res.data);
             setIsLoading(false);
         }
         
@@ -38,7 +37,6 @@ export default function HashtagsBox({ reloadPosts, postsList }) {
 	}, [reloadPosts, postsList]);
 
     function hashtagPage(hashtag) {
-        console.log(hashtag);
         navigate(`/hashtag/${hashtag}`);
       }
 
@@ -51,7 +49,7 @@ export default function HashtagsBox({ reloadPosts, postsList }) {
             return (<h2>There are no hashtags yet.</h2>);
         }
 
-        return hashtagsList.map((hashtag) => <HashtagLine onClick = {() => hashtagPage(hashtag.hashtag)}>{`# ${hashtag.hashtag}`}</HashtagLine>)
+        return hashtagsList.map((hashtag, index) => <HashtagLine key={index} onClick = {() => hashtagPage(hashtag.hashtag)}>{`# ${hashtag.hashtag}`}</HashtagLine>)
     }
 
 

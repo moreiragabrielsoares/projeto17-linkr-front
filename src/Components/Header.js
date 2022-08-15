@@ -123,7 +123,7 @@ export default function Header({ isLoading }) {
                   <img src={user.userPhoto} alt="" />
                   <h2>{user.name}</h2>
                 </div>
-              )))
+              ))
             :
               <h3>There are no users with this name</h3>
             }

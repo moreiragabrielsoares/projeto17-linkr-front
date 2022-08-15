@@ -93,7 +93,6 @@ export default function TimelinePage() {
 
         return (<ListPosts 
                     posts={ postsList } 
-                    modalIsOpen={modalIsOpen}
                     setModalIsOpen={setModalIsOpen}
                     setIdPostForDelete={setIdPostForDelete}
                 />)
