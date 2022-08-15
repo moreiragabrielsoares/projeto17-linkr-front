@@ -7,6 +7,7 @@ import { ThreeCircles } from "react-loader-spinner";
 import Header from "../Components/Header";
 import ModalWindow from "../Components/Modal";
 import ListPosts from "../Components/ListPosts";
+import HashtagsBox from "../Components/HashtagsBox";
 
 export default function UserPage() {
   const { id } = useParams();
@@ -65,7 +66,7 @@ export default function UserPage() {
                 }
             </div>
             <div className="right-side">
-              {/* <Trendings /> */}
+              <HashtagsBox />
             </div>
           </Container>
         }
@@ -88,7 +89,6 @@ const Main = styled.main`
 `;
 
 const Container = styled.div`
-  width: 90%;
   margin-top: 60px;
 
   display: flex;
@@ -99,7 +99,7 @@ const Container = styled.div`
     flex-direction: column;
     align-items: flex-start;
 
-    width: 70%;
+    width: 611px;
 
     .top {
       margin-left: 18px;
@@ -139,20 +139,21 @@ const Container = styled.div`
 
   .right-side {
     width: 30%;
+    margin-top: 12px;
   }
 
-  @media screen and (max-width: 900px) {
+  @media screen and (max-width: 940px) {
     .right-side {
       display: none;
     }
+  }
+
+  @media screen and (max-width: 611px) {
+    width: 100%;
 
     .left-side {
       width: 100%;
     }
-  }
-
-  @media screen and (max-width: 720px) {
-    width: 100%;
   }
 
   @media screen and (max-width: 480px) {

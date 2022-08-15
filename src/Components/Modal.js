@@ -56,9 +56,9 @@ const Modal = styled.div`
   border-radius: 50px;
   
   z-index: 2;
-  width: 30%;
+  width: 600px;
   margin-right: -50%;
-  padding: 40px 100px;
+  padding: 50px 100px;
 
   display: ${({ modalIsOpen }) => modalIsOpen ? "flex" : "none"};
   flex-direction: column;
@@ -81,9 +81,10 @@ const Modal = styled.div`
   }
 
   .buttons {
-    width: 85%;
+    width: 320px;
     display: flex;
     justify-content: space-around;
+    
     button {
       font-family: "Lato";
       font-size: 18px;
@@ -102,6 +103,28 @@ const Modal = styled.div`
     button:last-child {
       background-color: #1877F2;
       color: #FFFFFF;
+    }
+  }
+
+  @media screen and (max-width: 720px) {
+    width: 480px;
+  }
+
+  @media screen and (max-width: 480px) {
+    width: 320px;
+    padding: 50px 40px;
+
+    h1 {
+      font-size: 28px;
+    }
+
+    .buttons {
+      width: 250px;
+
+      button {
+        font-size: 16px;
+        padding: 9px 15px;
+      }
     }
   }
 `;

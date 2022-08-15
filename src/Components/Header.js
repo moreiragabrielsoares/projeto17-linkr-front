@@ -60,7 +60,7 @@ export default function Header({ isLoading }) {
                 </div>
               )
             :
-              <h3>Não foram encontrados usuários.</h3>
+              <h3>There are no users with this name</h3>
             }
           </div>
           : <></>
@@ -98,7 +98,7 @@ export default function Header({ isLoading }) {
                 </div>
               )
             :
-              <h3>Não foram encontrados usuários.</h3>
+              <h3>There are no users with this name</h3>
             }
           </div>
           : <></>
@@ -251,19 +251,19 @@ const Center = styled.div`
 const MobileSearchBar = styled.div`
   display: none;
   background-color: #333333;
-  border-radius: 8px;
 
   width: 100%;
   height: 45px;
+  padding-top: 8px;
 
-  position: fixed;
-  top: 80px;
+  position: absolute;
+  top: 72px;
   left: 0;
 
   .bar {
     width: 90%;
     height: 100%;
-    z-index: 1;
+    //z-index: 1;
 
     display: flex;
     justify-content: space-between;
