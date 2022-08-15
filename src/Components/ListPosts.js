@@ -143,14 +143,6 @@ const Posts = styled.div`
     }
   }
 
-  @media screen and (max-width: 720px) {
-    .post {
-      border-radius: 0;
-    }
-
-    margin-top: 20px;
-  }
-
   @media screen and (max-width: 480px) {
     .right {
       h2:first-child {
