@@ -24,7 +24,7 @@ export default function ModalWindow({ modalIsOpen, setModalIsOpen, idPostForDele
       setLoading(false);
     });
     response.catch((r) => {
-      alert(`Error ${ r.response.status }! Try again later... ${idPostForDelete}`);
+      alert(`Error ${ r.response.status }! Try again later...`);
       setLoading(false);
     });
   }
