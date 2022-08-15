@@ -63,7 +63,7 @@ export default function TimelinePage() {
 
     function errorTreatment(error) {
         
-        if (error.response.status == 500) {
+        if (error.response.status === 500) {
             return alert("An error occured while trying to fetch the posts, please refresh the page");
         }
 

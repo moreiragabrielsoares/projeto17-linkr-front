@@ -7,22 +7,34 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export default function Header({ isLoading }) {
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const [usersList, setUsersList] = useState([]);
+  const [logout, setLogout] = useState("false");
   const [showSearchUsers, setShowSearchUsers] = useState(false);
   const user = JSON.parse(localStorage.getItem("userData"));
   const navigate = useNavigate();
+  const ToggleLogout = () => {
+    setLogout(!logout);
+  };
+  function logoutUser(){
+    localStorage.clear()
+    navigate("/")
+  }
 
   useEffect(() => {
     if (search.length >= 3) {
-      const response = axios.get(`https://projeto17-back.herokuapp.com/user?user=${search}`);
-  
-      response.then((r) => {
-        setUsersList([...r.data]);
-        setShowSearchUsers(true);
-      }).catch((r) => {
-        alert(`Erro ${ r.response.status }!`);
-      });
+      const response = axios.get(
+        `https://projeto17-back.herokuapp.com/user?user=${search}`
+      );
+
+      response
+        .then((r) => {
+          setUsersList([...r.data]);
+          setShowSearchUsers(true);
+        })
+        .catch((r) => {
+          alert(`Erro ${r.response.status}!`);
+        });
     } else if (search.length < 3) {
       setUsersList([]);
       setShowSearchUsers(false);
@@ -32,7 +44,7 @@ export default function Header({ isLoading }) {
   return (
     <>
       <Head>
-        <h1 onClick={() => navigate('/timeline')}>linkr</h1>
+        <h1 onClick={() => navigate("/timeline")}>linkr</h1>
         <Center>
           <div className="bar">
             <DebounceInput
@@ -45,30 +57,38 @@ export default function Header({ isLoading }) {
               debounceTimeout={300}
               disabled={isLoading}
             />
-            <button><AiOutlineSearch color="#C6C6C6" size={"21px"} /></button>
+            <button>
+              <AiOutlineSearch color="#C6C6C6" size={"21px"} />
+            </button>
           </div>
-          {showSearchUsers ?
-          <div className="list-user">
-            {(usersList.length >= 1) ?
-              usersList.map((user, index) => 
-                <div className="user" key={index} onClick={() => {
-                    setSearch('');
-                    navigate(`/user/${user.id}`);
-                  }}>
-                  <img src={user.userPhoto} alt="" />
-                  <h2>{user.name}</h2>
-                </div>
-              )
-            :
-              <h3>Não foram encontrados usuários.</h3>
-            }
-          </div>
-          : <></>
-          }
+          {showSearchUsers ? (
+            <div className="list-user">
+              {usersList.length >= 1 ? (
+                usersList.map((user, index) => (
+                  <div
+                    className="user"
+                    key={index}
+                    onClick={() => {
+                      setSearch("");
+                      navigate(`/user/${user.id}`);
+                    }}
+                  >
+                    <img src={user.userPhoto} alt="" />
+                    <h2>{user.name}</h2>
+                  </div>
+                ))
+              ) : (
+                <h3>Não foram encontrados usuários.</h3>
+              )}
+            </div>
+          ) : (
+            <></>
+          )}
         </Center>
-        <div className="right">
-          <BsChevronDown color="#FFFFFF"size={"21px"} />
+        <div className="right" onClick={ToggleLogout}>
+          <BsChevronDown color="#FFFFFF" size={"21px"} />
           <img src={user.photo} alt="usuario" />
+          <div className={`logout ${logout ? "logoutActive" : ""}`} onClick={logoutUser}>Logout</div>
         </div>
       </Head>
       <MobileSearchBar>
@@ -83,28 +103,35 @@ export default function Header({ isLoading }) {
             debounceTimeout={300}
             disabled={isLoading}
           />
-          <button><AiOutlineSearch color="#C6C6C6" size={"21px"} /></button>
+          <button>
+            <AiOutlineSearch color="#C6C6C6" size={"21px"} />
+          </button>
         </div>
-        {showSearchUsers ?
+        {showSearchUsers ? (
           <div className="list-user">
-            {(usersList.length >= 1) ?
-              usersList.map((user, index) => 
-                <div className="user" key={index} onClick={() => {
-                    setSearch('');
+            {usersList.length >= 1 ? (
+              usersList.map((user, index) => (
+                <div
+                  className="user"
+                  key={index}
+                  onClick={() => {
+                    setSearch("");
                     navigate(`/user/${user.id}`);
-                  }}>
+                  }}
+                >
                   <img src={user.userPhoto} alt="" />
                   <h2>{user.name}</h2>
                 </div>
-              )
-            :
+              ))
+            ) : (
               <h3>Não foram encontrados usuários.</h3>
-            }
+            )}
           </div>
-          : <></>
-        }
+        ) : (
+          <></>
+        )}
       </MobileSearchBar>
-    </> 
+    </>
   );
 }
 
@@ -117,23 +144,46 @@ const Head = styled.header`
   z-index: 1;
   top: 0;
   left: 0;
-  
+
   display: flex;
   justify-content: space-between;
   align-items: center;
   position: fixed;
 
   h1 {
-    color: #FFFFFF;
+    color: #ffffff;
     font-family: "Passion One";
     font-size: 49px;
     font-weight: 700;
     cursor: pointer;
   }
-  
+
   .right {
     display: flex;
     align-items: center;
+    position: relative;
+    z-index: 3;
+    .logout {
+      width: 150px;
+      height: 43px;
+      position: absolute;
+      bottom: -43px;
+      background: #171717;
+      border-radius: 0px 0px 20px 20px;
+      font-family: "Lato";
+      display: flex;
+      align-items: center;
+      padding-left: 30px;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 15px;
+      line-height: 18px;
+      letter-spacing: 0.05em;
+    }
+    .logout.logoutActive {
+      bottom: 0px;
+      display: none;
+    }
 
     img {
       border-radius: 50%;
@@ -150,7 +200,6 @@ const Head = styled.header`
       font-size: 45px;
     }
     .right {
-
       img {
         width: 40px;
         height: 40px;
@@ -160,7 +209,7 @@ const Head = styled.header`
 `;
 
 const Center = styled.div`
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   border-radius: 8px;
 
   width: 50%;
@@ -185,13 +234,13 @@ const Center = styled.div`
       padding: 0 15px;
 
       ::placeholder {
-        color: #C6C6C6;
+        color: #c6c6c6;
         font-size: 19px;
       }
     }
 
     button {
-      background-color: #FFFFFF;
+      background-color: #ffffff;
       border: none;
       border-radius: 8px;
 
@@ -200,7 +249,7 @@ const Center = styled.div`
   }
 
   .list-user {
-    background-color: #E7E7E7;
+    background-color: #e7e7e7;
     border-radius: 0 0 8px 8px;
 
     width: 100%;
@@ -209,12 +258,13 @@ const Center = styled.div`
     position: absolute;
     top: 39px;
 
-    h2, h3 {
-        color: #515151;
-        font-family: "Lato";
-        font-size: 19px;
-        font-weight: 400;
-      }
+    h2,
+    h3 {
+      color: #515151;
+      font-family: "Lato";
+      font-size: 19px;
+      font-weight: 400;
+    }
 
     h3 {
       text-align: center;
@@ -239,7 +289,7 @@ const Center = styled.div`
       }
     }
   }
-  
+
   @media screen and (max-width: 480px) {
     display: none;
   }
@@ -277,13 +327,13 @@ const MobileSearchBar = styled.div`
       padding: 0 15px;
 
       ::placeholder {
-        color: #C6C6C6;
+        color: #c6c6c6;
         font-size: 19px;
       }
     }
 
     button {
-      background-color: #FFFFFF;
+      background-color: #ffffff;
       border: none;
       border-radius: 0 8px 8px 0;
 
@@ -293,7 +343,7 @@ const MobileSearchBar = styled.div`
   }
 
   .list-user {
-    background-color: #E7E7E7;
+    background-color: #e7e7e7;
     border-radius: 0 0 8px 8px;
 
     width: 90%;
@@ -302,12 +352,13 @@ const MobileSearchBar = styled.div`
     position: absolute;
     top: 39px;
 
-    h2, h3 {
-        color: #515151;
-        font-family: "Lato";
-        font-size: 19px;
-        font-weight: 400;
-      }
+    h2,
+    h3 {
+      color: #515151;
+      font-family: "Lato";
+      font-size: 19px;
+      font-weight: 400;
+    }
 
     h3 {
       text-align: center;
@@ -340,7 +391,8 @@ const MobileSearchBar = styled.div`
     flex-direction: column;
 
     .list-user {
-      h2, h3 {
+      h2,
+      h3 {
         font-size: 17px;
       }
     }
