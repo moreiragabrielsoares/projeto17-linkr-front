@@ -1,11 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import { Container } from "../../styledComponents/authStyledComponents";
 import RegisterForms from "./RegisterForms";
 
 export default function RegisterComponent() {
-  const navigate = useNavigate();
   return (
     <Container>
       <header>

@@ -3,6 +3,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Form } from "../../styledComponents/authStyledComponents";
+import { backUrl } from "../../Scripts/constants";
 
 export default function LoginForms() {
   const emailRef = useRef();
@@ -25,7 +26,7 @@ export default function LoginForms() {
     e.preventDefault();
   
     try {
-      const response = await axios.post("https://projeto17-back.herokuapp.com/signin", {
+      const response = await axios.post(`${backUrl}signin`, {
         email,
         password: pwd,
       });

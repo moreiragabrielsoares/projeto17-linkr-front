@@ -4,24 +4,18 @@ import { useNavigate } from "react-router-dom";
 import Banner from "../Components/AuthComponents/Banner";
 import LoginComponent from "../Components/AuthComponents/LoginComponent";
 import axios from "axios";
+import { backUrl, config, userData } from "../Scripts/constants";
 
 export default function LoginPage() {
   const navigate = useNavigate();
-  const userData = JSON.parse(localStorage.getItem("userData"));
-  let res;
   const checkToken = async () => {
     try {
-      console.log(userData.token);
       const response = await axios.post(
-        "https://projeto17-back.herokuapp.com/checkToken",
+        `${backUrl}checkToken`,
         {},
-        {
-          headers: {
-            Authorization: `Bearer ${userData.token}`,
-          },
-        }
+        config
       );
-      res = response.data;
+      const res = response.data;
       if (userData && res) {
         navigate("/timeline");
       }

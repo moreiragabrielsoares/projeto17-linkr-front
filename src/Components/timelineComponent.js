@@ -7,6 +7,7 @@ import { arrayContains } from "../Scripts/scripts";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { Link } from "../styledComponents/timelineStyledComponents";
+import { backUrl, config  } from "../Scripts/constants";
 
 export function Post({
   post,
@@ -14,7 +15,6 @@ export function Post({
   setIdPostForDelete,
   addLike,
   removeLike,
-  config,
   loadingEdit, 
   setLoadingEdit
 }) {
@@ -54,7 +54,7 @@ export function Post({
       } else if (event.key === "Enter" && isEditing) {
         setLoadingEdit(true);
         const response = axios.put(
-          `https://projeto17-back.herokuapp.com/timeline/${postEdit.postId}`,
+          `${backUrl}timeline/${postEdit.postId}`,
           { postText: postEdit.postText, postUrl: postEdit.postUrl },
           config
         );

@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import {BannerComponent} from "../../styledComponents/authStyledComponents"
 
 export default function Banner() {
