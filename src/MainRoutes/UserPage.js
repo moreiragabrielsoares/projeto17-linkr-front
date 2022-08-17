@@ -52,24 +52,35 @@ export default function UserPage() {
     } else if (!isFollowing) {
       return <button 
                 className="no-following"
-                onClick={handleFollow}
+                onClick={handleFollowUnfollow}
                 disabled={loadingFollowerButton}
               >Follow</button>
     } else if (isFollowing) {
       return <button
                 className="following"
-                onClick={handleUnfollow}
+                onClick={handleFollowUnfollow}
                 disabled={loadingFollowerButton}
               >Unfollow</button>
     }
   }
 
-  function handleFollow() {
+  function handleFollowUnfollow() {
     setLoadingFollowerButton(true);
-  }
+    let response;
 
-  function handleUnfollow() {
-    setLoadingFollowerButton(true);
+    if (isFollowing) {
+      response = axios.delete(`${backUrl}user/unfollow/${ id }`, config);
+    } else if (!isFollowing) {
+      response = axios.post(`${backUrl}user/follow/${ id }`, {}, config);
+    }
+
+    response.then((r) => {
+      setIsFollowing(!isFollowing);
+      setLoadingFollowerButton(false);
+    }).catch((r) => {
+      alert(`Error ${ r.response.status }!`);
+      setLoadingFollowerButton(false);
+    });
   }
 
   return (

@@ -75,6 +75,7 @@ export const Top = styled.div`
   button:disabled {
     background-color: #E3E3E3;
     color: #000000;
+    cursor: initial;
   }
 
   .no-following {
