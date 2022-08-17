@@ -18,6 +18,7 @@ export default function UserPage() {
   const [idPostForDelete, setIdPostForDelete] = useState();
   const [reloadPosts, setReloadPosts] = useState(true);
   const [isFollowing, setIsFollowing] = useState(null);
+  const [loadingFollowerButton, setLoadingFollowerButton] = useState(true);
   const userPage = true;
   
   useEffect(() => {
@@ -38,9 +39,10 @@ export default function UserPage() {
 
     response.then((r) => {
       setIsFollowing(r.data.following);
+      setLoadingFollowerButton(false);
     }).catch((r) => {
       alert(`Error ${ r.response.status }!`);
-      setIsLoading(false);
+      setLoadingFollowerButton(false);
     });
   }, [id, isFollowing]);
 
@@ -48,10 +50,26 @@ export default function UserPage() {
     if (isFollowing === null) {
       return <></>
     } else if (!isFollowing) {
-      return <button className="no-following">Follow</button>
+      return <button 
+                className="no-following"
+                onClick={handleFollow}
+                disabled={loadingFollowerButton}
+              >Follow</button>
     } else if (isFollowing) {
-      return <button className="following">Unfollow</button>
+      return <button
+                className="following"
+                onClick={handleUnfollow}
+                disabled={loadingFollowerButton}
+              >Unfollow</button>
     }
+  }
+
+  function handleFollow() {
+    setLoadingFollowerButton(true);
+  }
+
+  function handleUnfollow() {
+    setLoadingFollowerButton(true);
   }
 
   return (

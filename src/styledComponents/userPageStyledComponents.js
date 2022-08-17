@@ -72,6 +72,11 @@ export const Top = styled.div`
     height: 31px;
   }
   
+  button:disabled {
+    background-color: #E3E3E3;
+    color: #000000;
+  }
+
   .no-following {
     background-color: #1877F2;
     color: #FFFFFF;
