@@ -2,25 +2,20 @@ import axios from "axios";
 import { Post } from "./timelineComponent";
 import { Posts } from "../styledComponents/timelineStyledComponents";
 import { useState } from "react";
+import { config, userData, backUrl } from "../Scripts/constants";
 
 export default function ListPosts({ posts, userPage, setModalIsOpen, setIdPostForDelete }) {
-  const user = JSON.parse(localStorage.getItem("userData"));
-  const config = {
-    headers: {
-      Authorization: `Bearer ${user.token}`,
-    },
-  };
   const [loadingEdit, setLoadingEdit] = useState(false);
 
   function addLike(postId) {
     let body = {
-      userId: user.userId,
+      userId: userData.userId,
       postId: postId,
-      username: user.name,
+      username: userData.name,
     };
     console.log(body);
     const promise = axios.post(
-      "https://projeto17-back.herokuapp.com/like",
+      `${backUrl}like`,
       body,
       config
     );
@@ -39,12 +34,12 @@ export default function ListPosts({ posts, userPage, setModalIsOpen, setIdPostFo
 
   function removeLike(postId) {
     let body = {
-      userId: user.userId,
+      userId: userData.userId,
       postId: postId,
     };
 
     const promise = axios.post(
-      "https://projeto17-back.herokuapp.com/unlike",
+      `${backUrl}unlike`,
       body,
       config
     );
@@ -61,14 +56,13 @@ export default function ListPosts({ posts, userPage, setModalIsOpen, setIdPostFo
 
   return (
     <Posts userPage={userPage} loadingEdit={loadingEdit}>
-      {user.length !== 0 ? posts?.map((post, index) => (
+      {userData.length !== 0 ? posts?.map((post, index) => (
         <Post
           key={index}
           setIdPostForDelete={setIdPostForDelete}
           post={post}
           addLike={addLike}
           removeLike={removeLike}
-          config={config}
           loadingEdit={loadingEdit}
           setLoadingEdit={setLoadingEdit}
           setModalIsOpen={setModalIsOpen}

@@ -4,6 +4,7 @@ import { FaInfoCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Form } from "../../styledComponents/authStyledComponents";
+import { backUrl } from "../../Scripts/constants";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -85,7 +86,7 @@ export default function RegisterForms() {
     try {
       const postObj = { name:user, email, password: pwd, userPhoto: photo};
       const response = await axios.post(
-        "https://projeto17-back.herokuapp.com/signup",
+        `${backUrl}signup`,
         postObj
       );
       setUser("");
@@ -135,8 +136,8 @@ export default function RegisterForms() {
       >
         <FaInfoCircle />
         Deve ser um e-mail válido.
-        Deve ter 2 dominios.
-        Ex: example@example.com.br
+        Deve ter 1 dominio.
+        Ex: example@example.com
       </h4>
       <input
         type="password"

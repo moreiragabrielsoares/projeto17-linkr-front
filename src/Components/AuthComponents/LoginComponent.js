@@ -1,11 +1,9 @@
 import React from "react";
 import LoginForms from "./LoginForms";
-import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Container } from "../../styledComponents/authStyledComponents";
 
 export default function LoginComponent() {
-  const navigate = useNavigate();
 
   return (
     <Container>
