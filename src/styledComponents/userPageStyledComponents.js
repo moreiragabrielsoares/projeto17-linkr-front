@@ -36,21 +36,50 @@ export const Container = styled.div`
 export const Top = styled.div`
   margin-left: 18px;
   display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-  img {
-    border-radius: 50%;
-    object-fit: cover;
+  .left {
+    display: flex;
+    
+    img {
+      border-radius: 50%;
+      object-fit: cover;
 
-    width: 50px;
-    height: 50px;
+      width: 50px;
+      height: 50px;
+    }
+
+    h1 {
+      color: #FFFFFF;
+      font-family: "Oswald";
+      font-size: 43px;
+      font-weight: 700;
+      margin-left: 18px;
+    }
   }
 
-  h1 {
-    color: #FFFFFF;
-    font-family: "Oswald";
-    font-size: 43px;
+  button {
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+    font-family: "Lato";
+    font-size: 14px;
     font-weight: 700;
-    margin-left: 18px;
+
+    width: 112px;
+    height: 31px;
+  }
+  
+  .no-following {
+    background-color: #1877F2;
+    color: #FFFFFF;
+  }
+
+  .following {
+    background-color: #FFFFFF;
+    color: #1877F2;
   }
 
   @media screen and (max-width: 480px) {
