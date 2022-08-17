@@ -29,35 +29,45 @@ export const Container = styled.div`
   margin-top: 60px;
 
   display: flex;
+  flex-direction: column;
   justify-content: center;
+`;
 
+export const Top = styled.div`
+  margin-left: 18px;
+  display: flex;
+
+  img {
+    border-radius: 50%;
+    object-fit: cover;
+
+    width: 50px;
+    height: 50px;
+  }
+
+  h1 {
+    color: #FFFFFF;
+    font-family: "Oswald";
+    font-size: 43px;
+    font-weight: 700;
+    margin-left: 18px;
+  }
+
+  @media screen and (max-width: 480px) {
+    margin-top: 30px;
+  }
+`;
+
+export const Center = styled.div`
+  display: flex;
+  
   .left-side {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 
     width: 611px;
-
-    .top {
-      margin-left: 18px;
-      display: flex;
-
-      img {
-        border-radius: 50%;
-        object-fit: cover;
-
-        width: 50px;
-        height: 50px;
-      }
-
-      h1 {
-        color: #FFFFFF;
-        font-family: "Oswald";
-        font-size: 43px;
-        font-weight: 700;
-        margin-left: 18px;
-      }
-    }
+    margin-top: 38px;
 
     .no-posts {
       margin-left: 18px;
@@ -74,11 +84,6 @@ export const Container = styled.div`
     }
   }
 
-  .right-side {
-    width: 30%;
-    margin-top: 12px;
-  }
-
   @media screen and (max-width: 940px) {
     .right-side {
       display: none;
@@ -91,9 +96,5 @@ export const Container = styled.div`
     .left-side {
       width: 100%;
     }
-  }
-
-  @media screen and (max-width: 480px) {
-    margin-top: 90px;
   }
 `;

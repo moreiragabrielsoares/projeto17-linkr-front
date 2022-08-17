@@ -1,4 +1,4 @@
-import { Body, Main, Container } from "../styledComponents/userPageStyledComponents";
+import { Body, Main, Container, Top, Center } from "../styledComponents/userPageStyledComponents";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
@@ -48,27 +48,29 @@ export default function UserPage() {
         : 
           <Main isLoading={ isLoading } >
               <Container>
-                <div className="left-side">
-                  <div className="top">
-                    <img src={ userPosts[0].userPhoto } alt="" />
-                    <h1>{ userPosts[0].userName }'s posts</h1>
+                <Top>
+                  <img src={ userPosts[0].userPhoto } alt="" />
+                  <h1>{ userPosts[0].userName }'s posts</h1>
+                </Top>
+                <Center>
+                  <div className="left-side">
+                    {userPosts[0].postId ?
+                        <ListPosts
+                          posts={userPosts}
+                          userPage={userPage}
+                          setModalIsOpen={setModalIsOpen}
+                          setIdPostForDelete={setIdPostForDelete}
+                        />
+                      :
+                        <div className="no-posts">
+                          <h2>There are no posts yet.</h2>
+                        </div>
+                      }
                   </div>
-                  {userPosts[0].postId ?
-                      <ListPosts
-                        posts={userPosts}
-                        userPage={userPage}
-                        setModalIsOpen={setModalIsOpen}
-                        setIdPostForDelete={setIdPostForDelete}
-                      />
-                    :
-                      <div className="no-posts">
-                        <h2>There are no posts yet.</h2>
-                      </div>
-                    }
-                </div>
-                <div className="right-side">
-                  <HashtagsBox reloadPosts={reloadPosts} />
-                </div>
+                  <div className="right-side">
+                    <HashtagsBox reloadPosts={reloadPosts} />
+                  </div>
+                </Center>
               </Container>
           </Main>
         }
