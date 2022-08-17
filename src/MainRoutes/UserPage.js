@@ -93,7 +93,7 @@ export default function UserPage() {
         setReloadPosts={setReloadPosts}
       />
       <Body isLoading={ isLoading } modalIsOpen={modalIsOpen} >
-        <Header />
+        <Header isFollowing={isFollowing} />
         {isLoading ? 
           <ThreeCircles color={"#FFFFFF"}/> 
         : 

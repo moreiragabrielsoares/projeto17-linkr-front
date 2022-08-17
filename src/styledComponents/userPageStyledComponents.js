@@ -96,11 +96,13 @@ export const Top = styled.div`
     }
   }
 
+  @media screen and (max-width: 580px) {
+    margin-top: 30px;
+  }
+
   @media screen and (max-width: 480px) {
     flex-direction: column;
     align-items: flex-start;
-
-    margin-top: 30px;
 
     button {
       margin-top: 25px;
