@@ -5,7 +5,8 @@ import { Center, Head, MobileSearchBar  } from "../styledComponents/headerStyled
 import { userData } from "../Scripts/constants";
 import SearchBar from "./SearchBar";
 
-export default function Header({ isLoading }) {
+export default function Header({ isLoading, isFollowing }) {
+  const [search, setSearch] = useState("");
   const [logout, setLogout] = useState("false");
   const navigate = useNavigate();
   const ToggleLogout = () => {
@@ -21,7 +22,12 @@ export default function Header({ isLoading }) {
       <Head>
         <h1 onClick={() => navigate("/timeline")}>linkr</h1>
         <Center>
-          <SearchBar isLoading={isLoading} />
+          <SearchBar
+            isLoading={isLoading}
+            isFollowing={isFollowing}
+            search={search}
+            setSearch={setSearch}
+          />
         </Center>
         <div className="right" onClick={ToggleLogout}>
           <BsChevronDown color="#FFFFFF" size={"21px"} style={{ "cursor": 'pointer' }}/>
@@ -30,7 +36,12 @@ export default function Header({ isLoading }) {
         </div>
       </Head>
       <MobileSearchBar>
-        <SearchBar isLoading={isLoading} />
+        <SearchBar
+          isLoading={isLoading}
+          isFollowing={isFollowing}
+          search={search}
+          setSearch={setSearch}
+        />
       </MobileSearchBar>
     </>
   );

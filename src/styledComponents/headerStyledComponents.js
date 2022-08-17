@@ -128,7 +128,8 @@ export const Center = styled.div`
     top: 39px;
 
     h2,
-    h3 {
+    h3,
+    h4 {
       color: #515151;
       font-family: "Lato";
       font-size: 19px;
@@ -138,6 +139,11 @@ export const Center = styled.div`
     h3 {
       text-align: center;
       margin-bottom: 13px;
+    }
+
+    h4 {
+      color: #C5C5C5;
+      margin-left: 8px;
     }
 
     .user {
@@ -159,7 +165,7 @@ export const Center = styled.div`
     }
   }
 
-  @media screen and (max-width: 480px) {
+  @media screen and (max-width: 580px) {
     display: none;
   }
 `;
@@ -221,10 +227,11 @@ left: 0;
   top: 39px;
 
   h2,
-  h3 {
+  h3,
+  h4 {
     color: #515151;
     font-family: "Lato";
-    font-size: 19px;
+    font-size: 17px;
     font-weight: 400;
   }
 
@@ -233,6 +240,11 @@ left: 0;
     margin-top: 10px;
     margin-bottom: 13px;
   }
+
+  h4 {
+      color: #C5C5C5;
+      margin-left: 8px;
+    }
 
   .user {
     display: flex;
@@ -253,16 +265,9 @@ left: 0;
   }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 580px) {
   display: flex;
   align-items: center;
   flex-direction: column;
-
-  .list-user {
-    h2,
-    h3 {
-      font-size: 17px;
-    }
-  }
 }
 `;

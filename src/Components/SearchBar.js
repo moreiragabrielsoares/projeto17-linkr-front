@@ -4,19 +4,17 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { backUrl } from "../Scripts/constants";
+import { backUrl, config } from "../Scripts/constants";
 
-export default function SearchBar({ isLoading }) {
-  const [search, setSearch] = useState("");
+export default function SearchBar({ isLoading, isFollowing, search, setSearch }) {
+  
   const [usersList, setUsersList] = useState([]);
   const [showSearchUsers, setShowSearchUsers] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (search.length >= 3) {
-      const response = axios.get(
-        `${backUrl}user?user=${search}`
-      );
+      const response = axios.get(`${backUrl}user?user=${search}`, config);
 
       response
         .then((r) => {
@@ -30,10 +28,14 @@ export default function SearchBar({ isLoading }) {
       setUsersList([]);
       setShowSearchUsers(false);
     }
-  }, [search]);
+  }, [search, isFollowing]);
 
-  function checkFollowing() {
-    
+  function checkFollowing(following) {
+    if (following) {
+      return <h4>• following</h4>
+    } else {
+      return <></>
+    }
   }
 
   return(
@@ -67,7 +69,7 @@ export default function SearchBar({ isLoading }) {
               >
                 <img src={userData.userPhoto} alt="" />
                 <h2>{userData.name}</h2>
-                {checkFollowing()}
+                {checkFollowing(userData.following)}
               </div>
             ))
           ) : (
