@@ -88,8 +88,24 @@ export const Top = styled.div`
     color: #1877F2;
   }
 
+  @media screen and (max-width: 611px) {
+    margin-right: 18px;
+    
+    button {
+      width: 90px;
+    }
+  }
+
   @media screen and (max-width: 480px) {
+    flex-direction: column;
+    align-items: flex-start;
+
     margin-top: 30px;
+
+    button {
+      margin-top: 25px;
+      align-self: center;
+    }
   }
 `;
 
@@ -120,6 +136,10 @@ export const Center = styled.div`
   }
 
   @media screen and (max-width: 940px) {
+    .left-side {
+      margin-top: 0;
+    }
+
     .right-side {
       display: none;
     }
