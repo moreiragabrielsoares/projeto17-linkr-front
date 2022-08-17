@@ -29,35 +29,96 @@ export const Container = styled.div`
   margin-top: 60px;
 
   display: flex;
+  flex-direction: column;
   justify-content: center;
+`;
 
+export const Top = styled.div`
+  margin-left: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .left {
+    display: flex;
+    
+    img {
+      border-radius: 50%;
+      object-fit: cover;
+
+      width: 50px;
+      height: 50px;
+    }
+
+    h1 {
+      color: #FFFFFF;
+      font-family: "Oswald";
+      font-size: 43px;
+      font-weight: 700;
+      margin-left: 18px;
+    }
+  }
+
+  button {
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+    font-family: "Lato";
+    font-size: 14px;
+    font-weight: 700;
+
+    width: 112px;
+    height: 31px;
+  }
+  
+  button:disabled {
+    background-color: #E3E3E3;
+    color: #000000;
+    cursor: initial;
+  }
+
+  .no-following {
+    background-color: #1877F2;
+    color: #FFFFFF;
+  }
+
+  .following {
+    background-color: #FFFFFF;
+    color: #1877F2;
+  }
+
+  @media screen and (max-width: 611px) {
+    margin-right: 18px;
+    
+    button {
+      width: 90px;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    flex-direction: column;
+    align-items: flex-start;
+
+    margin-top: 30px;
+
+    button {
+      margin-top: 25px;
+      align-self: center;
+    }
+  }
+`;
+
+export const Center = styled.div`
+  display: flex;
+  
   .left-side {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 
     width: 611px;
-
-    .top {
-      margin-left: 18px;
-      display: flex;
-
-      img {
-        border-radius: 50%;
-        object-fit: cover;
-
-        width: 50px;
-        height: 50px;
-      }
-
-      h1 {
-        color: #FFFFFF;
-        font-family: "Oswald";
-        font-size: 43px;
-        font-weight: 700;
-        margin-left: 18px;
-      }
-    }
+    margin-top: 38px;
 
     .no-posts {
       margin-left: 18px;
@@ -74,12 +135,11 @@ export const Container = styled.div`
     }
   }
 
-  .right-side {
-    width: 30%;
-    margin-top: 12px;
-  }
-
   @media screen and (max-width: 940px) {
+    .left-side {
+      margin-top: 0;
+    }
+
     .right-side {
       display: none;
     }
@@ -91,9 +151,5 @@ export const Container = styled.div`
     .left-side {
       width: 100%;
     }
-  }
-
-  @media screen and (max-width: 480px) {
-    margin-top: 90px;
   }
 `;
