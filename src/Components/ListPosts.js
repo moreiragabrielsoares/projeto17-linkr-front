@@ -4,7 +4,7 @@ import { Posts } from "../styledComponents/timelineStyledComponents";
 import { useState } from "react";
 import { config, userData, backUrl } from "../Scripts/constants";
 
-export default function ListPosts({ posts, userPage, setModalIsOpen, setIdPostForDelete }) {
+export default function ListPosts({ posts, userPage, setModalIsOpen, setIdPostForDelete, setPostsList }) {
   const [loadingEdit, setLoadingEdit] = useState(false);
 
   function addLike(postId) {
@@ -54,6 +54,7 @@ export default function ListPosts({ posts, userPage, setModalIsOpen, setIdPostFo
       });
   }
 
+
   return (
     <Posts userPage={userPage} loadingEdit={loadingEdit}>
       {userData.length !== 0 ? posts?.map((post, index) => (
@@ -66,6 +67,7 @@ export default function ListPosts({ posts, userPage, setModalIsOpen, setIdPostFo
           loadingEdit={loadingEdit}
           setLoadingEdit={setLoadingEdit}
           setModalIsOpen={setModalIsOpen}
+          setPostsList={setPostsList}
         />
       )):<></>}
     </Posts>

@@ -21,7 +21,7 @@ export const Posts = styled.div`
 
     width: 100%;
     padding: 18px;
-    margin-bottom: 18px;
+    margin-top: 18px;
 
     display: flex;
   }
