@@ -38,6 +38,7 @@ export default function TimelinePage() {
     function success(res) {
       setPostsList(res.data);
       setIsLoading(false);
+      console.log(res.data);
     }
 
     promisse.catch((error) => {
@@ -95,6 +96,7 @@ export default function TimelinePage() {
         posts={postsList}
         setModalIsOpen={setModalIsOpen}
         setIdPostForDelete={setIdPostForDelete}
+        setPostsList={setPostsList}
       />
     );
   }
