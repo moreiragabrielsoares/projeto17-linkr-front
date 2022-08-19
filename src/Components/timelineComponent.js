@@ -406,7 +406,7 @@ const FormsInput = styled.input`
   }
 
   @media screen and (max-width: 500px) {
-    width: 345px;
+    width: 275px;
   }
 `;
 
