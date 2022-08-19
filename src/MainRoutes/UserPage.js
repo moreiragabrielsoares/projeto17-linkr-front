@@ -36,6 +36,7 @@ export default function UserPage() {
   }, [id, reloadPosts]);
 
   useEffect(() => {
+    setLoadingFollowerButton(true);
     const response = axios.get(`${backUrl}user/following/${ id }`, config);
 
     response.then((r) => {
@@ -48,8 +49,14 @@ export default function UserPage() {
   }, [id, isFollowing]);
 
   function checkFollowing() {
-    if (isFollowing === null) {
-      return <></>
+    if (loadingFollowerButton) {
+      return <button 
+                disabled={loadingFollowerButton}
+              >Loading...</button>
+    } else if (isFollowing === null) {
+      return <button 
+                disabled={true}
+              >Your Page</button>
     } else if (!isFollowing) {
       return <button 
                 className="no-following"
