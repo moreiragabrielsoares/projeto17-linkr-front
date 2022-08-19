@@ -69,6 +69,11 @@ export default function ModalWindow({
     });
   }
 
+  function cancelModal() {
+    setModalIsOpen(false);
+    {idPostForDelete !== "" ? setIdPostForDelete("") : setIdRepost("")}
+  }
+
   return (
     <Modal modalIsOpen={modalIsOpen}>
       {idPostForDelete !== "" ? (
@@ -81,14 +86,7 @@ export default function ModalWindow({
       ) : (
         <div className="buttons">
           <button
-            onClick={() => {
-              setModalIsOpen(false);
-              {
-                idPostForDelete !== ""
-                  ? setIdPostForDelete("")
-                  : setIdRepost("");
-              }
-            }}
+            onClick={cancelModal}
             disabled={loading}
           >
             No, {idPostForDelete !== "" ? "go back" : "cancel"}
