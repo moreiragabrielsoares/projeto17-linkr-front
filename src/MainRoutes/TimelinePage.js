@@ -93,7 +93,7 @@ export default function TimelinePage() {
     setPostText("");
     setPostUrl("");
     setPostsList(res.data);
-    setIsLoading(false);
+    setReloadPosts(!reloadPosts);
   }
 
   function checkPosts() {
