@@ -51,7 +51,7 @@ export function Post({
   }, [isEditing]);
 
   function hashtagPage(tag) {
-    const hashtag = tag.slice(1, tag.length);
+    const hashtag = ((tag.slice(1, tag.length)).toLowerCase());
     navigate(`/hashtag/${hashtag}`);
   }
 
