@@ -28,7 +28,8 @@ export default function TimelinePage() {
   const [postsList, setPostsList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [idPostForDelete, setIdPostForDelete] = useState();
+  const [idPostForDelete, setIdPostForDelete] = useState("");
+  const [idRepost, setIdRepost] = useState("");
   const [reloadPosts, setReloadPosts] = useState(true);
 
   useEffect(() => {
@@ -97,6 +98,7 @@ export default function TimelinePage() {
         setModalIsOpen={setModalIsOpen}
         setIdPostForDelete={setIdPostForDelete}
         setPostsList={setPostsList}
+        setIdRepost={setIdRepost}
       />
     );
   }
@@ -109,6 +111,9 @@ export default function TimelinePage() {
         idPostForDelete={idPostForDelete}
         reloadPosts={reloadPosts}
         setReloadPosts={setReloadPosts}
+        setIdPostForDelete={setIdPostForDelete}
+        setIdRepost={setIdRepost}
+        idRepost={idRepost}
       />
 
       <BodyContainer modalIsOpen={modalIsOpen}>

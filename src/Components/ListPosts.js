@@ -4,7 +4,7 @@ import { Posts } from "../styledComponents/timelineStyledComponents";
 import { useState } from "react";
 import { config, userData, backUrl } from "../Scripts/constants";
 
-export default function ListPosts({ posts, userPage, setModalIsOpen, setIdPostForDelete, setPostsList }) {
+export default function ListPosts({ posts, userPage, setModalIsOpen, setIdPostForDelete, setPostsList, setIdRepost }) {
   const [loadingEdit, setLoadingEdit] = useState(false);
 
   function addLike(postId) {
@@ -68,6 +68,7 @@ export default function ListPosts({ posts, userPage, setModalIsOpen, setIdPostFo
           setLoadingEdit={setLoadingEdit}
           setModalIsOpen={setModalIsOpen}
           setPostsList={setPostsList}
+          setIdRepost={setIdRepost}
         />
       )):<></>}
     </Posts>
