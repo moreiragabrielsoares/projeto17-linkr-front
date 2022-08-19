@@ -31,15 +31,28 @@ export default function TimelinePage() {
   const [idPostForDelete, setIdPostForDelete] = useState("");
   const [idRepost, setIdRepost] = useState("");
   const [reloadPosts, setReloadPosts] = useState(true);
+  const [followingList, setFollowingList] = useState([]);
 
   useEffect(() => {
     const promisse = axios.get(`${backUrl}timeline`, config);
 
     promisse.then(success);
+
     function success(res) {
       setPostsList(res.data);
-      setIsLoading(false);
-      console.log(res.data);
+      if (res.data.length === 0) {
+        const response = axios.get(`${backUrl}following`, config);
+
+        response.then((r) => {
+          setFollowingList([...r.data]);
+          setIsLoading(false);
+        }).catch((r) => {
+          alert(`Error ${ r.response.status }!`);
+          setIsLoading(false);
+        });
+      } else {
+        setIsLoading(false);
+      }
     }
 
     promisse.catch((error) => {
@@ -86,10 +99,10 @@ export default function TimelinePage() {
   function checkPosts() {
     if (isLoading) {
       return <h2>Loading...</h2>;
-    }
-
-    if (postsList.length === 0) {
-      return <h2>There are no posts yet.</h2>;
+    } else if (postsList.length === 0 && followingList.length > 0) {
+      return <h2>No posts found from your friends.</h2>;
+    } else if (postsList.length === 0 && followingList.length === 0) {
+      return <h2>You don't follow anyone yet. Search for new friends!</h2>
     }
 
     return (
