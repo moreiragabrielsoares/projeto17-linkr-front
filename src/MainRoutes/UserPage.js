@@ -89,6 +89,7 @@ export default function UserPage() {
         modalIsOpen={modalIsOpen}
         setModalIsOpen={setModalIsOpen}
         idPostForDelete={idPostForDelete}
+        setIdPostForDelete={setIdPostForDelete}
         reloadPosts={reloadPosts}
         setReloadPosts={setReloadPosts}
       />
