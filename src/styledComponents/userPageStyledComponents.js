@@ -120,7 +120,7 @@ export const Center = styled.div`
     align-items: flex-start;
 
     width: 611px;
-    margin-top: 38px;
+    margin-top: 20px;
 
     .no-posts {
       margin-left: 18px;
