@@ -1,27 +1,32 @@
 import { useNavigate } from "react-router-dom";
-import { AiOutlineHeart, AiFillHeart , AiOutlineComment, AiOutlineSend} from "react-icons/ai";
+import {
+  AiOutlineHeart,
+  AiFillHeart,
+  AiOutlineComment,
+  AiOutlineSend,
+} from "react-icons/ai";
 import { BsFillTrashFill, BsFillPencilFill } from "react-icons/bs";
+import { BiRepost } from "react-icons/bi";
 import { ReactTagify } from "react-tagify";
 import ReactTooltip from "react-tooltip";
 import { arrayContains } from "../Scripts/scripts";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { Link } from "../styledComponents/timelineStyledComponents";
-import { backUrl, config  } from "../Scripts/constants";
+import { backUrl, config } from "../Scripts/constants";
 import styled from "styled-components";
-
 
 export function Post({
   post,
   setModalIsOpen,
   setIdPostForDelete,
+  setIdRepost,
   addLike,
   removeLike,
-  loadingEdit, 
+  loadingEdit,
   setLoadingEdit,
-  setPostsList
+  setPostsList,
 }) {
-  
   const tooltip = "";
   const user = JSON.parse(localStorage.getItem("userData"));
   const [isEditing, setIsEditing] = useState(false);
@@ -30,7 +35,7 @@ export function Post({
     postText: "",
     postUrl: "",
   });
-  
+
   const inputRef = useRef(null);
   const navigate = useNavigate();
   const tagStyle = {
@@ -49,7 +54,7 @@ export function Post({
     const hashtag = tag.slice(1, tag.length);
     navigate(`/hashtag/${hashtag}`);
   }
-  
+
   useEffect(() => {
     const handleKeybord = (event) => {
       if (event.keyCode === 27 && isEditing) {
@@ -85,21 +90,20 @@ export function Post({
     setPostEdit({ postText: text, postId: id, postUrl: url });
   }
 
-
   const [commentText, setCommentText] = useState("");
   const [isFormDisabled, setIsFormDisabled] = useState(false);
   const [isCommentsOpen, setIsCommentsOpen] = useState(false);
 
   function openComments() {
-    setIsCommentsOpen(prevState => !prevState);
+    setIsCommentsOpen((prevState) => !prevState);
   }
 
   function checkDetail(isAuthor, isFollowing) {
-    if(isAuthor) {
+    if (isAuthor) {
       return "posts's author";
     }
 
-    if(isFollowing) {
+    if (isFollowing) {
       return "following";
     }
 
@@ -111,9 +115,9 @@ export function Post({
     setIsFormDisabled(true);
     const commentObj = {
       postId,
-      comment
+      comment,
     };
-    
+
     const request = axios.post(`${backUrl}comment`, commentObj, config);
 
     request.then(postSuccess);
@@ -132,7 +136,6 @@ export function Post({
     setCommentText("");
     setPostsList(res.data);
   }
-
 
   return (
     <MainContainer>
@@ -160,12 +163,17 @@ export function Post({
           <h3 data-tip={tooltip}>{post.usersLiked.length} Likes </h3>
           <ReactTooltip place="bottom" type="light" />
           <CommentIcon>
-            <AiOutlineComment
-              size={"20px"}
-              onClick={() => openComments()}
-            />
+            <AiOutlineComment size={"20px"} onClick={() => openComments()} />
           </CommentIcon>
-          <h3 data-tip={tooltip}>{post.postComments.length} comments </h3>
+          <h3>{post.postComments.length} comments </h3>
+          <BiRepost
+            size={"20px"}
+            onClick={() => {
+              setModalIsOpen(true);
+              setIdRepost(post.postId);
+            }}
+          />
+          <h3>{post.postComments.length} re-posts </h3>
         </div>
         <div className="right">
           <span className="top-link">
@@ -226,45 +234,38 @@ export function Post({
         </div>
       </div>
       <CommentsContainer isCommentsOpen={isCommentsOpen}>
-
         {post.postComments?.map((comment, index) => (
           <>
             <CommentContainer>
-
               <UserPhoto>
-                <img
-                  src={comment.userPhoto}
-                />
+                <img src={comment.userPhoto} />
               </UserPhoto>
 
               <RightContainer>
-
                 <UserNameLine>
                   <UserName> {comment.userName} </UserName>
-                  <Detail> {checkDetail(comment.isAuthor, comment.isFollowing)} </Detail>
+                  <Detail>
+                    {" "}
+                    {checkDetail(comment.isAuthor, comment.isFollowing)}{" "}
+                  </Detail>
                 </UserNameLine>
 
                 <Comment> {comment.comment} </Comment>
-
               </RightContainer>
-
             </CommentContainer>
             <Line></Line>
           </>
         ))}
 
         <InputContainer>
-        
           <UserPhoto>
-            <img
-              src={user.photo}
-            />
+            <img src={user.photo} />
           </UserPhoto>
 
-          <FormsContainer onSubmit={(event) => createComment(event, post.postId, commentText)}>
-
+          <FormsContainer
+            onSubmit={(event) => createComment(event, post.postId, commentText)}
+          >
             <FormsInputDiv>
-
               <FormsInput
                 id="comment"
                 placeholder="write a comment..."
@@ -277,26 +278,20 @@ export function Post({
 
               <FormsIcon>
                 <FormsButton type="submit" disabled={isFormDisabled}>
-                  <AiOutlineSend color={"#F3F3F3"}/>
+                  <AiOutlineSend color={"#F3F3F3"} />
                 </FormsButton>
               </FormsIcon>
-
             </FormsInputDiv>
-    
           </FormsContainer>
-        
         </InputContainer>
-
       </CommentsContainer>
     </MainContainer>
   );
 }
 
-
-
 const CommentIcon = styled.div`
   margin-top: 15px;
-  
+
   :hover {
     cursor: pointer;
   }
@@ -309,9 +304,9 @@ const MainContainer = styled.div`
 `;
 
 const CommentsContainer = styled.div`
-  display: ${({isCommentsOpen}) => isCommentsOpen ? "flex" : "none" };
+  display: ${({ isCommentsOpen }) => (isCommentsOpen ? "flex" : "none")};
   flex-direction: column;
-  background: #1E1E1E;
+  background: #1e1e1e;
   border-radius: 16px;
   padding: 0 20px 0 20px;
 `;
@@ -325,9 +320,8 @@ const CommentContainer = styled.div`
 `;
 
 const UserPhoto = styled.div`
-  
   margin-right: 18px;
-  
+
   img {
     border-radius: 50%;
     object-fit: cover;
@@ -348,16 +342,16 @@ const UserNameLine = styled.div`
 `;
 
 const UserName = styled.div`
-  font-family: 'Lato';
+  font-family: "Lato";
   font-style: normal;
   font-weight: 700;
   font-size: 14px;
-  color: #F3F3F3;
+  color: #f3f3f3;
   margin-right: 7px;
 `;
 
 const Detail = styled.div`
-  font-family: 'Lato';
+  font-family: "Lato";
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -365,11 +359,11 @@ const Detail = styled.div`
 `;
 
 const Comment = styled.div`
-  font-family: 'Lato';
+  font-family: "Lato";
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
-  color: #ACACAC;
+  color: #acacac;
 `;
 
 const Line = styled.div`
@@ -385,9 +379,7 @@ const InputContainer = styled.div`
   margin-bottom: 15px;
 `;
 
-const FormsContainer = styled.form`
-
-`;
+const FormsContainer = styled.form``;
 
 const FormsInputDiv = styled.div`
   position: relative;
@@ -398,18 +390,18 @@ const FormsInput = styled.input`
   height: 39px;
   background: #252525;
   border-radius: 8px;
-  padding-left:10px;
-  color: #ACACAC;
-  ::placeholder{
-    font-family: 'Lato';
+  padding-left: 10px;
+  color: #acacac;
+  ::placeholder {
+    font-family: "Lato";
     font-style: italic;
     font-weight: 400;
     font-size: 14px;
     letter-spacing: 0.05em;
-    color: #ACACAC;
+    color: #acacac;
   }
 
-  :disabled{
+  :disabled {
     opacity: 0.6;
   }
 
@@ -425,16 +417,14 @@ const FormsIcon = styled.div`
 `;
 
 const FormsButton = styled.button`
-
   background: none;
   border: none;
 
-  :disabled{
-      opacity: 0.6;
+  :disabled {
+    opacity: 0.6;
   }
 
   :hover {
-      cursor: pointer;
+    cursor: pointer;
   }
-
 `;
