@@ -29,9 +29,9 @@ export default function Header({ isLoading, isFollowing }) {
             setSearch={setSearch}
           />
         </Center>
-        <div className="right" onClick={ToggleLogout}>
-          <BsChevronDown color="#FFFFFF" size={"21px"} style={{ "cursor": 'pointer' }}/>
-          <img src={userData.photo} alt="usuario" />
+        <div className="right">
+          <BsChevronDown onClick={ToggleLogout} color="#FFFFFF" size={"21px"} style={{ "cursor": 'pointer' }}/>
+          <img src={userData.photo} alt="usuario" onClick={() => navigate(`/user/${userData.userId}`)}/>
           <div className={`logout ${logout ? "logoutActive" : ""}`} onClick={logoutUser}>Logout</div>
         </div>
       </Head>
