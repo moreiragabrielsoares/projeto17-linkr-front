@@ -15,7 +15,8 @@ export default function UserPage() {
   const [userPosts, setUserPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [idPostForDelete, setIdPostForDelete] = useState();
+  const [idPostForDelete, setIdPostForDelete] = useState("");
+  const [idRepost, setIdRepost] = useState("");
   const [reloadPosts, setReloadPosts] = useState(true);
   const [isFollowing, setIsFollowing] = useState(null);
   const [loadingFollowerButton, setLoadingFollowerButton] = useState(true);
@@ -92,6 +93,8 @@ export default function UserPage() {
         setIdPostForDelete={setIdPostForDelete}
         reloadPosts={reloadPosts}
         setReloadPosts={setReloadPosts}
+        idRepost={idRepost}
+        setIdRepost={setIdRepost}
       />
       <Body isLoading={ isLoading } modalIsOpen={modalIsOpen} >
         <Header isFollowing={isFollowing} />
@@ -115,6 +118,7 @@ export default function UserPage() {
                           userPage={userPage}
                           setModalIsOpen={setModalIsOpen}
                           setIdPostForDelete={setIdPostForDelete}
+                          setIdRepost={setIdRepost}
                         />
                       :
                         <div className="no-posts">
